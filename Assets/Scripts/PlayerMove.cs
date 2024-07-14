@@ -9,7 +9,7 @@ using UnityEngine.Rendering;
 public class PlayerMove : MonoBehaviour
 {
     [SerializeField, Range(0, 20)] private float _speed = 4f;
-    [SerializeField] private Rigidbody2D _rb;
+    private Rigidbody2D _rb;
     private PlayerInput input;
     private Vector2 direction = Vector2.zero;
     #region Jump
@@ -23,6 +23,7 @@ public class PlayerMove : MonoBehaviour
     private int _jumpCount = 1;
     [SerializeField]private float wallJumpDirectionForce = 5;
     private float wallJumpDirection = 0;
+    [SerializeField] public bool HaveWallJunping = false;
     #endregion
 
     #region Wall Slide
@@ -100,7 +101,7 @@ public class PlayerMove : MonoBehaviour
 
     private void Jump()
     {
-        if(isWallSilding)
+        if(HaveWallJunping && isWallSilding)
         {
             Debug.Log($"!{wallJumpDirection}!");
             _rb.velocity = new Vector2(wallJumpDirection, _jumpForce);
