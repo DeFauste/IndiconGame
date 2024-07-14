@@ -396,6 +396,46 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6441099876125994476, guid: c33fae11088db2c4f9c918e803f29ecf, type: 3}
+      propertyPath: InitialModule.size3D
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6441099876125994476, guid: c33fae11088db2c4f9c918e803f29ecf, type: 3}
+      propertyPath: InitialModule.rotation3D
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6441099876125994476, guid: c33fae11088db2c4f9c918e803f29ecf, type: 3}
+      propertyPath: InitialModule.startSizeY.scalar
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6441099876125994476, guid: c33fae11088db2c4f9c918e803f29ecf, type: 3}
+      propertyPath: InitialModule.startSizeZ.scalar
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6441099876125994476, guid: c33fae11088db2c4f9c918e803f29ecf, type: 3}
+      propertyPath: InitialModule.startSizeY.minScalar
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6441099876125994476, guid: c33fae11088db2c4f9c918e803f29ecf, type: 3}
+      propertyPath: InitialModule.startSizeZ.minScalar
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6441099876125994476, guid: c33fae11088db2c4f9c918e803f29ecf, type: 3}
+      propertyPath: InitialModule.startRotationX.scalar
+      value: -3.1415925
+      objectReference: {fileID: 0}
+    - target: {fileID: 6441099876125994476, guid: c33fae11088db2c4f9c918e803f29ecf, type: 3}
+      propertyPath: InitialModule.startRotationY.scalar
+      value: 3.1415925
+      objectReference: {fileID: 0}
+    - target: {fileID: 6441099876125994476, guid: c33fae11088db2c4f9c918e803f29ecf, type: 3}
+      propertyPath: InitialModule.startRotationX.minScalar
+      value: 3.1415925
+      objectReference: {fileID: 0}
+    - target: {fileID: 6441099876125994476, guid: c33fae11088db2c4f9c918e803f29ecf, type: 3}
+      propertyPath: InitialModule.startRotationY.minScalar
+      value: -3.1415925
+      objectReference: {fileID: 0}
     - target: {fileID: 7722842230489044201, guid: c33fae11088db2c4f9c918e803f29ecf, type: 3}
       propertyPath: m_Name
       value: Confetti Blast
