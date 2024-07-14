@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5244699493180397876}
   - component: {fileID: 1087752658642234998}
   - component: {fileID: 3048720833237266165}
-  m_Layer: 8
+  m_Layer: 4
   m_Name: Water Drop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -120,7 +120,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.1
+  m_Radius: 0.09
 --- !u!50 &3048720833237266165
 Rigidbody2D:
   serializedVersion: 4
