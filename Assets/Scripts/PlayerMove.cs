@@ -20,6 +20,8 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private bool _isGrounded = false;
     [SerializeField] private float fallSpeed = 5;
     private Vector2 vecGravity;
+    [SerializeField] private int maxJumpCount = 2;
+    private int _jumpCount = 0;
     #endregion
     // Start is called before the first frame update
     void Start()
@@ -27,10 +29,10 @@ public class PlayerMove : MonoBehaviour
         InitComponent();
         InitInput();
     }
-    
+
     private void InitComponent()
     {
-        if(_rb == null) _rb = GetComponent<Rigidbody2D>();
+        if (_rb == null) _rb = GetComponent<Rigidbody2D>();
         vecGravity = new Vector2(0, -Physics2D.gravity.y);
     }
     private void InitInput()
@@ -45,16 +47,29 @@ public class PlayerMove : MonoBehaviour
     }
     private void Update()
     {
-        _isGrounded = Physics2D.OverlapCapsule(groundCheck.position, new Vector2(1f, 0.3f), CapsuleDirection2D.Horizontal, 0, groundLayer);
+        _isGrounded = Physics2D.OverlapCapsule(groundCheck.position, new Vector2(0.7f, 0.3f), CapsuleDirection2D.Horizontal, 0, groundLayer);
+
         _isJump = input.Gameplay.Jump.inProgress;
         direction = GetDirection();
     }
     private void FixedUpdate()
     {
+        Jump();
+    }
+
+    private void Jump()
+    {
         _rb.velocity = new Vector2(direction.x * _speed, _rb.velocity.y);
         if (_isJump)
         {
-            _rb.velocity = new Vector2(_rb.velocity.x, _jumpForce);
+            if(_isGrounded || _rb.velocity.y != 0 && !_isGrounded && _jumpCount < maxJumpCount)
+            {
+                _rb.velocity = new Vector2(_rb.velocity.x, _jumpForce);
+                _jumpCount++;
+            }
+        } else
+        {
+            _jumpCount = 0;
         }
         if (_rb.velocity.y < 0)
         {
