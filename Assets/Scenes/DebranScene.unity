@@ -453,7 +453,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 5
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 8974bd09db4d17248ae5791599db835b, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -598,6 +598,7 @@ MonoBehaviour:
     m_Bits: 64
   _isGrounded: 0
   fallSpeed: 10
+  maxJumpCount: 2
 --- !u!1 &766577103
 GameObject:
   m_ObjectHideFlags: 0
@@ -609,7 +610,7 @@ GameObject:
   - component: {fileID: 766577104}
   - component: {fileID: 766577106}
   - component: {fileID: 766577105}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Square (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -943,7 +944,7 @@ GameObject:
   - component: {fileID: 1913712915}
   - component: {fileID: 1913712917}
   - component: {fileID: 1913712916}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Square (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

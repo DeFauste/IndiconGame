@@ -21,7 +21,7 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private float fallSpeed = 5;
     private Vector2 vecGravity;
     [SerializeField] private int maxJumpCount = 2;
-    private int _jumpCount = 0;
+    private int _jumpCount = 1;
     #endregion
     // Start is called before the first frame update
     void Start()
@@ -39,6 +39,7 @@ public class PlayerMove : MonoBehaviour
     {
         input = new PlayerInput();
         input.Enable();
+        input.Gameplay.Jump.performed  += _ => Jump();
     }
 
     private Vector2 GetDirection()
@@ -47,33 +48,45 @@ public class PlayerMove : MonoBehaviour
     }
     private void Update()
     {
-        _isGrounded = Physics2D.OverlapCapsule(groundCheck.position, new Vector2(0.7f, 0.3f), CapsuleDirection2D.Horizontal, 0, groundLayer);
-
-        _isJump = input.Gameplay.Jump.inProgress;
+        _isGrounded = isGrounded();
+        _isJump = input.Gameplay.Jump.IsPressed();
         direction = GetDirection();
     }
+
+    private bool isGrounded() => Physics2D.OverlapCapsule(groundCheck.position, new Vector2(0.7f, 0.3f), CapsuleDirection2D.Horizontal, 0, groundLayer);
+
     private void FixedUpdate()
     {
-        Jump();
+        Move();
+        GravityFall();
+    }
+
+    private void GravityFall()
+    {
+        if (_rb.velocity.y < 0)
+        {
+            _rb.velocity -= vecGravity * fallSpeed * Time.fixedDeltaTime;
+        }
+    }
+
+    private void Move()
+    {
+        _rb.velocity = new Vector2(direction.x * _speed, _rb.velocity.y);
     }
 
     private void Jump()
     {
-        _rb.velocity = new Vector2(direction.x * _speed, _rb.velocity.y);
-        if (_isJump)
+        if(_isGrounded) {
+           _rb.velocity = new Vector2(_rb.velocity.x, _jumpForce);
+        }else if(_rb.velocity.y != 0 && !_isGrounded && _jumpCount < maxJumpCount)
         {
-            if(_isGrounded || _rb.velocity.y != 0 && !_isGrounded && _jumpCount < maxJumpCount)
-            {
-                _rb.velocity = new Vector2(_rb.velocity.x, _jumpForce);
-                _jumpCount++;
-            }
-        } else
+            _rb.velocity = new Vector2(_rb.velocity.x, _jumpForce);
+            _jumpCount++;
+         }
+        
+        if(_isGrounded) 
         {
-            _jumpCount = 0;
-        }
-        if (_rb.velocity.y < 0)
-        {
-            _rb.velocity -= vecGravity * fallSpeed * Time.fixedDeltaTime;
+            _jumpCount = 1;
         }
     }
 }
