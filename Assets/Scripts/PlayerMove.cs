@@ -14,7 +14,6 @@ public class PlayerMove : MonoBehaviour
     private Vector2 direction = Vector2.zero;
     #region Jump
     [SerializeField, Range(0, 200)] private float _jumpForce = 4f;
-    private bool _isJump = false;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private bool _isGrounded = false;
@@ -22,6 +21,16 @@ public class PlayerMove : MonoBehaviour
     private Vector2 vecGravity;
     [SerializeField] private int maxJumpCount = 2;
     private int _jumpCount = 1;
+    [SerializeField]private float wallJumpDirectionForce = 5;
+    private float wallJumpDirection = 0;
+    #endregion
+
+    #region Wall Slide
+    [SerializeField] private Transform leftWallCheck;
+    [SerializeField] private Transform rightWallCheck;
+    [SerializeField] private LayerMask wallLayer;
+    private bool isWallSilding;
+    [SerializeField] private float wallSlidingSpeed = 2f;
     #endregion
     // Start is called before the first frame update
     void Start()
@@ -49,18 +58,32 @@ public class PlayerMove : MonoBehaviour
     private void Update()
     {
         _isGrounded = isGrounded();
-        _isJump = input.Gameplay.Jump.IsPressed();
         direction = GetDirection();
     }
 
     private bool isGrounded() => Physics2D.OverlapCapsule(groundCheck.position, new Vector2(0.7f, 0.3f), CapsuleDirection2D.Horizontal, 0, groundLayer);
+    private bool isLeftWall() => Physics2D.OverlapCapsule(leftWallCheck.position, new Vector2(0.7f, 0.3f), CapsuleDirection2D.Vertical, 0, wallLayer);
+    private bool isRightWall() => Physics2D.OverlapCapsule(rightWallCheck.position, new Vector2(0.7f, 0.3f), CapsuleDirection2D.Vertical, 0, wallLayer);
 
     private void FixedUpdate()
     {
         Move();
         GravityFall();
+        WallSlide();
     }
 
+    private void WallSlide()
+    {
+        if(!_isGrounded && (isLeftWall() || isRightWall()) && _rb.velocity.x != 0)
+        {
+            isWallSilding = true;
+            _rb.velocity = new Vector2(_rb.velocity.x, Mathf.Clamp(_rb.velocity.y, -wallSlidingSpeed , float.MaxValue));
+            wallJumpDirection = isLeftWall() ? wallJumpDirectionForce : -wallJumpDirectionForce;
+        }else
+        {
+            isWallSilding = false;
+        }
+    }
     private void GravityFall()
     {
         if (_rb.velocity.y < 0)
@@ -71,12 +94,18 @@ public class PlayerMove : MonoBehaviour
 
     private void Move()
     {
+        if(!isWallSilding)
         _rb.velocity = new Vector2(direction.x * _speed, _rb.velocity.y);
     }
 
     private void Jump()
     {
-        if(_isGrounded) {
+        if(isWallSilding)
+        {
+            Debug.Log($"!{wallJumpDirection}!");
+            _rb.velocity = new Vector2(wallJumpDirection, _jumpForce);
+        }
+        else if (_isGrounded) {
            _rb.velocity = new Vector2(_rb.velocity.x, _jumpForce);
         }else if(_rb.velocity.y != 0 && !_isGrounded && _jumpCount < maxJumpCount)
         {
