@@ -118,19 +118,20 @@ public class __PlayerMove : MonoBehaviour
 
     private void Jump()
     {
-        JumpSoundPlay();
-
         if(HaveWallJumping && isWallSilding)
         {
             Debug.Log($"!{wallJumpDirection}!");
             _rb.velocity = new Vector2(wallJumpDirection, _jumpForce);
+            JumpSoundPlay();
         }
         else if (_isGrounded) {                                                    // Jump
            _rb.velocity = new Vector2(_rb.velocity.x, _jumpForce);
+           JumpSoundPlay();
         }else if(_rb.velocity.y != 0 && !_isGrounded && _jumpCount < maxJumpCount) // doubleJump
         {
             _rb.velocity = new Vector2(_rb.velocity.x, _jumpForce);
             _jumpCount++;
+            JumpSoundPlay();
          }
 
         if(_isGrounded)
