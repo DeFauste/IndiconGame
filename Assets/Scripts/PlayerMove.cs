@@ -69,7 +69,7 @@ public class PlayerMove : MonoBehaviour
     private void FixedUpdate()
     {
         Move();
-        GravityFall();
+        //GravityFall();
         WallSlide();
     }
 
