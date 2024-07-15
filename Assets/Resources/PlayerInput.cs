@@ -44,6 +44,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""F"",
+                    ""type"": ""Button"",
+                    ""id"": ""bfe57617-31e0-430e-807f-ec4aa5e2c22d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -90,6 +99,17 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f9f4ff0d-9dc4-41d4-a466-50f6a2857587"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": ""Press(pressPoint=0.2)"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""F"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -100,6 +120,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
         m_Gameplay_Moveble = m_Gameplay.FindAction("Moveble", throwIfNotFound: true);
         m_Gameplay_Jump = m_Gameplay.FindAction("Jump", throwIfNotFound: true);
+        m_Gameplay_F = m_Gameplay.FindAction("F", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -163,12 +184,14 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private List<IGameplayActions> m_GameplayActionsCallbackInterfaces = new List<IGameplayActions>();
     private readonly InputAction m_Gameplay_Moveble;
     private readonly InputAction m_Gameplay_Jump;
+    private readonly InputAction m_Gameplay_F;
     public struct GameplayActions
     {
         private @PlayerInput m_Wrapper;
         public GameplayActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
         public InputAction @Moveble => m_Wrapper.m_Gameplay_Moveble;
         public InputAction @Jump => m_Wrapper.m_Gameplay_Jump;
+        public InputAction @F => m_Wrapper.m_Gameplay_F;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -184,6 +207,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Jump.started += instance.OnJump;
             @Jump.performed += instance.OnJump;
             @Jump.canceled += instance.OnJump;
+            @F.started += instance.OnF;
+            @F.performed += instance.OnF;
+            @F.canceled += instance.OnF;
         }
 
         private void UnregisterCallbacks(IGameplayActions instance)
@@ -194,6 +220,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Jump.started -= instance.OnJump;
             @Jump.performed -= instance.OnJump;
             @Jump.canceled -= instance.OnJump;
+            @F.started -= instance.OnF;
+            @F.performed -= instance.OnF;
+            @F.canceled -= instance.OnF;
         }
 
         public void RemoveCallbacks(IGameplayActions instance)
@@ -215,5 +244,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     {
         void OnMoveble(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
+        void OnF(InputAction.CallbackContext context);
     }
 }
