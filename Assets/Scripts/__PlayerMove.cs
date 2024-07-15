@@ -37,9 +37,18 @@ public class __PlayerMove : MonoBehaviour
     [SerializeField] private bool _isRightWall = false;
 
     #endregion
+
+    #region Effects
+    ParticleSystem splash;
+    public AudioSource audioSource;
+    public AudioClip jump, dive;
+    #endregion
+
     // Start is called before the first frame update
     void Start()
     {
+        splash = GetComponent<ParticleSystem>();
+
         InitComponent();
         InitInput();
     }
@@ -109,6 +118,8 @@ public class __PlayerMove : MonoBehaviour
 
     private void Jump()
     {
+        JumpSoundPlay();
+
         if(HaveWallJumping && isWallSilding)
         {
             Debug.Log($"!{wallJumpDirection}!");
@@ -126,5 +137,23 @@ public class __PlayerMove : MonoBehaviour
         {
             _jumpCount = 1;
         }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        var layerMask = other.gameObject.layer;
+        if(layerMask == LayerMask.NameToLayer ("Water"))
+        {
+            splash.Play();
+            audioSource.clip = dive;
+            audioSource.Play();
+        }
+
+    }
+
+    private void JumpSoundPlay()
+    {
+            audioSource.clip = jump;
+            audioSource.Play();
     }
 }

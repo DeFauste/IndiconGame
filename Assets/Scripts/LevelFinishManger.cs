@@ -6,6 +6,9 @@ public class LevelFinishManger : MonoBehaviour
 {
 ParticleSystem confetti;
 
+public AudioSource audioSource;
+public AudioClip collect;
+
 private void OnEnable() => Collectible.OnCollected += OnCollect;
 private void OnDisable() => Collectible.OnCollected -= OnCollect;
 
@@ -17,6 +20,8 @@ private void Start()
 void OnCollect()
 {
     confetti.Play();
+    audioSource.clip = collect;
+    audioSource.Play();
 }
 
 }
