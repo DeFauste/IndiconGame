@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 
 [RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(BoxCollider2D))]
+[RequireComponent(typeof(CapsuleCollider2D))]
 public class __PlayerMove : MonoBehaviour
 {
     [SerializeField, Range(0, 20)] private float _speed = 4f;
@@ -44,10 +44,16 @@ public class __PlayerMove : MonoBehaviour
     public AudioClip jump, dive;
     #endregion
 
+    #region Animation
+    private Animator animator;
+    bool isLookingRight = true;
+    #endregion
+
     // Start is called before the first frame update
     void Start()
     {
         splash = GetComponent<ParticleSystem>();
+        animator = GetComponent<Animator>();
 
         InitComponent();
         InitInput();
@@ -77,6 +83,9 @@ public class __PlayerMove : MonoBehaviour
         _isRightWall = isRightWall();
 
         direction = GetDirection();
+
+        animator.SetBool("IsJumping", !_isGrounded);
+        animator.SetFloat("XVelocity", Math.Abs(direction.x * _speed));
     }
 
     private bool isGrounded() => Physics2D.OverlapCapsule(groundCheck.position, new Vector2(0.3f, 0.5f), CapsuleDirection2D.Horizontal, 0, groundLayer);
@@ -85,6 +94,7 @@ public class __PlayerMove : MonoBehaviour
 
     private void FixedUpdate()
     {
+        FlipCheck();
         Move();
         GravityFall();
         WallSlide();
@@ -92,7 +102,7 @@ public class __PlayerMove : MonoBehaviour
 
     private void WallSlide()
     {
-        if(!_isGrounded && (isLeftWall() || isRightWall()) && _rb.velocity.x != 0)
+        if(!_isGrounded && (isLeftWall() || isRightWall()) && (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)))
         {
             isWallSilding = true;
             _rb.velocity = new Vector2(_rb.velocity.x, Mathf.Clamp(_rb.velocity.y, -wallSlidingSpeed , float.MaxValue));
@@ -113,7 +123,9 @@ public class __PlayerMove : MonoBehaviour
     private void Move()
     {
         if(!isWallSilding)
-        _rb.velocity = new Vector2(direction.x * _speed, _rb.velocity.y);
+        {
+            _rb.velocity = new Vector2(direction.x * _speed, _rb.velocity.y);
+        }
     }
 
     private void Jump()
@@ -137,6 +149,33 @@ public class __PlayerMove : MonoBehaviour
         if(_isGrounded)
         {
             _jumpCount = 1;
+        }
+    }
+
+    private void FlipCheck()
+    {
+        if (Input.GetKeyDown(KeyCode.A) && isLookingRight)
+        {
+            GetComponent<SpriteRenderer>().flipX = true;
+            isLookingRight = false;
+        }
+
+        if (Input.GetKeyDown(KeyCode.D) && !isLookingRight)
+        {
+            GetComponent<SpriteRenderer>().flipX = false;
+            isLookingRight = true;
+        }
+
+        if (Input.GetKey(KeyCode.A) && isLookingRight)
+        {
+            GetComponent<SpriteRenderer>().flipX = true;
+            isLookingRight = false;
+        }
+
+        if (Input.GetKey(KeyCode.D) && !isLookingRight)
+        {
+            GetComponent<SpriteRenderer>().flipX = false;
+            isLookingRight = true;
         }
     }
 
