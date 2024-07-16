@@ -4,6 +4,7 @@ using UnityEngine;
 
 public enum EWaterProperty
 {
+    None,
     Water,
     Slime,
     Gasoline,
@@ -13,13 +14,16 @@ public interface IWaterIneract
 {
     EWaterProperty Property { get; set; }
     float Square();
+
+    float Pump(int forcePump);
 }
-public abstract class WaterProperty : IWaterIneract
+public abstract class WaterProperty : MonoBehaviour, IWaterIneract
 {
 
-    [SerializeField] private EWaterProperty property;
+    [SerializeField] public EWaterProperty property;
 
     public abstract EWaterProperty Property { get; set; }
 
+    public abstract float Pump(int forcePump);
     public abstract float Square();
 }

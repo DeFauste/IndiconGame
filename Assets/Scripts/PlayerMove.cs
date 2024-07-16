@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 
 [RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(BoxCollider2D))]
+[RequireComponent(typeof(CapsuleCollider2D))]
 public class PlayerMove : MonoBehaviour
 {
     [SerializeField, Range(0, 20)] private float _speed = 4f;
@@ -21,21 +21,44 @@ public class PlayerMove : MonoBehaviour
     private Vector2 vecGravity;
     [SerializeField] private int maxJumpCount = 2;
     private int _jumpCount = 1;
-    [SerializeField]private float wallJumpDirectionForce = 5;
+    [SerializeField] private float wallJumpDirectionForce = 5;
     private float wallJumpDirection = 0;
-    [SerializeField] public bool HaveWallJunping = false;
+    [SerializeField] public bool HaveWallJumping = false;
     #endregion
 
     #region Wall Slide
     [SerializeField] private Transform leftWallCheck;
     [SerializeField] private Transform rightWallCheck;
     [SerializeField] private LayerMask wallLayer;
-    private bool isWallSilding;
+    [SerializeField] private bool isWallSilding;
     [SerializeField] private float wallSlidingSpeed = 2f;
+
+    [SerializeField] private bool _isLeftWall = false;
+    [SerializeField] private bool _isRightWall = false;
+
+    #endregion
+
+    #region Effects
+    ParticleSystem splash;
+    public AudioSource audioSource;
+    public AudioClip jump, dive;
+    #endregion
+
+    #region Animation
+    private Animator animator;
+    bool isLookingRight = false;
+    #endregion
+
+    #region Player Property 
+    public bool HaveDoubleJump { get; set; } = false;
+    public bool HaveWallSliding { get; set; } = false;
     #endregion
     // Start is called before the first frame update
     void Start()
     {
+        splash = GetComponent<ParticleSystem>();
+        animator = GetComponent<Animator>();
+
         InitComponent();
         InitInput();
     }
@@ -49,7 +72,7 @@ public class PlayerMove : MonoBehaviour
     {
         input = new PlayerInput();
         input.Enable();
-        input.Gameplay.Jump.performed  += _ => Jump();
+        input.Gameplay.Jump.performed += _ => Jump();
     }
 
     private Vector2 GetDirection()
@@ -59,15 +82,23 @@ public class PlayerMove : MonoBehaviour
     private void Update()
     {
         _isGrounded = isGrounded();
+
+        _isLeftWall = isLeftWall();
+        _isRightWall = isRightWall();
+
         direction = GetDirection();
+
+        animator.SetBool("IsJumping", !_isGrounded);
+        animator.SetFloat("XVelocity", Math.Abs(direction.x * _speed));
     }
 
-    private bool isGrounded() => Physics2D.OverlapCapsule(groundCheck.position, new Vector2(0.7f, 0.3f), CapsuleDirection2D.Horizontal, 0, groundLayer);
+    private bool isGrounded() => Physics2D.OverlapCapsule(groundCheck.position, new Vector2(0.3f, 0.5f), CapsuleDirection2D.Horizontal, 0, groundLayer);
     private bool isLeftWall() => Physics2D.OverlapCapsule(leftWallCheck.position, new Vector2(0.7f, 0.3f), CapsuleDirection2D.Vertical, 0, wallLayer);
     private bool isRightWall() => Physics2D.OverlapCapsule(rightWallCheck.position, new Vector2(0.7f, 0.3f), CapsuleDirection2D.Vertical, 0, wallLayer);
 
     private void FixedUpdate()
     {
+        FlipCheck();
         Move();
         //GravityFall();
         WallSlide();
@@ -75,12 +106,13 @@ public class PlayerMove : MonoBehaviour
 
     private void WallSlide()
     {
-        if(!_isGrounded && (isLeftWall() || isRightWall()) && _rb.velocity.x != 0)
+        if (!_isGrounded && (isLeftWall() || isRightWall()) && (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)))
         {
             isWallSilding = true;
-            _rb.velocity = new Vector2(_rb.velocity.x, Mathf.Clamp(_rb.velocity.y, -wallSlidingSpeed , float.MaxValue));
+            _rb.velocity = new Vector2(_rb.velocity.x, Mathf.Clamp(_rb.velocity.y, -wallSlidingSpeed, float.MaxValue));
             wallJumpDirection = isLeftWall() ? wallJumpDirectionForce : -wallJumpDirectionForce;
-        }else
+        }
+        else
         {
             isWallSilding = false;
         }
@@ -95,28 +127,79 @@ public class PlayerMove : MonoBehaviour
 
     private void Move()
     {
-        if(!isWallSilding)
-        _rb.velocity = new Vector2(direction.x * _speed, _rb.velocity.y);
+        if (!isWallSilding)
+        {
+            _rb.velocity = new Vector2(direction.x * _speed, _rb.velocity.y);
+        }
     }
 
     private void Jump()
     {
-        if(HaveWallJunping && isWallSilding)
+        if (HaveWallJumping && isWallSilding)
         {
-            Debug.Log($"!{wallJumpDirection}!");
             _rb.velocity = new Vector2(wallJumpDirection, _jumpForce);
+            JumpSoundPlay();
         }
-        else if (_isGrounded) {
-           _rb.velocity = new Vector2(_rb.velocity.x, _jumpForce);
-        }else if(_rb.velocity.y != 0 && !_isGrounded && _jumpCount < maxJumpCount)
+        else if (_isGrounded)
+        {                                                    // Jump
+            _rb.velocity = new Vector2(_rb.velocity.x, _jumpForce);
+            JumpSoundPlay();
+        }
+        else if (_rb.velocity.y != 0 && !_isGrounded && _jumpCount < maxJumpCount) // doubleJump
         {
             _rb.velocity = new Vector2(_rb.velocity.x, _jumpForce);
             _jumpCount++;
-         }
-        
-        if(_isGrounded) 
+            JumpSoundPlay();
+        }
+
+        if (_isGrounded)
         {
             _jumpCount = 1;
         }
+    }
+
+    private void FlipCheck()
+    {
+        if (Input.GetKeyDown(KeyCode.A) && isLookingRight)
+        {
+            GetComponent<SpriteRenderer>().flipX = true;
+            isLookingRight = false;
+        }
+
+        if (Input.GetKeyDown(KeyCode.D) && !isLookingRight)
+        {
+            GetComponent<SpriteRenderer>().flipX = false;
+            isLookingRight = true;
+        }
+
+        if (Input.GetKey(KeyCode.A) && isLookingRight)
+        {
+            GetComponent<SpriteRenderer>().flipX = true;
+            isLookingRight = false;
+        }
+
+        if (Input.GetKey(KeyCode.D) && !isLookingRight)
+        {
+            GetComponent<SpriteRenderer>().flipX = false;
+            isLookingRight = true;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        var layerMask = other.gameObject.layer;
+        if (layerMask == LayerMask.NameToLayer("Water"))
+        {
+            splash.Play();
+            audioSource.clip = dive;
+            audioSource.Play();
+        }
+
+    }
+
+    private void JumpSoundPlay()
+    {
+        audioSource.clip = jump;
+        audioSource.Play();
     }
 }

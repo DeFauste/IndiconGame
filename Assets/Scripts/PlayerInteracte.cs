@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerInteracte : MonoBehaviour
@@ -13,10 +11,10 @@ public class PlayerInteracte : MonoBehaviour
         _inputActions.Enable();
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         IInteracteble i =  collision.GetComponent<IInteracteble>();
-        if(i != null )
+        if(i != null && _interacteble == null)
         {
             _interacteble = i;
         }
@@ -24,7 +22,7 @@ public class PlayerInteracte : MonoBehaviour
 
     private void Update()
     {
-        if(_interacteble != null && _inputActions.Gameplay.F.IsPressed())
+        if(_interacteble != null && Input.GetKey(KeyCode.F))
         {
             _interacteble.Interacte();
         }

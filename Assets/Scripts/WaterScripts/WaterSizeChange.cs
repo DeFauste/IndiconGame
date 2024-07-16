@@ -22,9 +22,10 @@ public class WaterSizeChange : MonoBehaviour, IInteracteble
         transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y + 0.02f * Time.deltaTime, transform.localScale.z);
 
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         hint.enabled = true;
+
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
