@@ -46,7 +46,7 @@ public class __PlayerMove : MonoBehaviour
 
     #region Animation
     private Animator animator;
-    bool isLookingRight = true;
+    bool isLookingRight = false;
     #endregion
 
     // Start is called before the first frame update
