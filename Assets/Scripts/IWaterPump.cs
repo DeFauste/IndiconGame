@@ -4,6 +4,6 @@ using UnityEngine;
 
 public interface IWaterPump
 {
-    void Pump(int forcePump);
+    void Pump(int forcePump, float V);
     void SetPropertyWater(EWaterProperty type);
 }

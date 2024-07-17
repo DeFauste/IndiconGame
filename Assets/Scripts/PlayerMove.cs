@@ -50,8 +50,12 @@ public class PlayerMove : MonoBehaviour
 
     #region Player Property 
     [SerializeField] public bool HaveDoubleJump = false;
-    [SerializeField] public bool HaveWallSliding = false;
     [SerializeField] public bool HaveWallJumping = false;
+    public float JumpForce { get => _jumpForce; set
+        {
+            _jumpForce = value;
+        } 
+    }
     #endregion
     // Start is called before the first frame update
     void Start()
@@ -106,7 +110,6 @@ public class PlayerMove : MonoBehaviour
 
     private void WallSlide()
     {
-        if (!HaveWallSliding) return;
         if (!_isGrounded && (isLeftWall() || isRightWall()) && (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)))
         {
             isWallSilding = true;

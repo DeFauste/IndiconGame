@@ -13,9 +13,9 @@ public enum EWaterProperty
 public interface IWaterIneract
 {
     EWaterProperty Property { get; set; }
-    float Square();
-
-    float Pump(int forcePump);
+    float SubSquare();
+    void ResizeSquare();
+    float Pump(int forcePump, float V);
 }
 public abstract class WaterProperty : MonoBehaviour, IWaterIneract
 {
@@ -24,6 +24,7 @@ public abstract class WaterProperty : MonoBehaviour, IWaterIneract
 
     public abstract EWaterProperty Property { get; set; }
 
-    public abstract float Pump(int forcePump);
-    public abstract float Square();
+    public abstract float Pump(int forcePump, float V);
+    public abstract void ResizeSquare();
+    public abstract float SubSquare();
 }

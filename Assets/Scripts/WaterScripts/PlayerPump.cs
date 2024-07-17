@@ -6,6 +6,7 @@ using UnityEngine;
 public class PlayerPump : MonoBehaviour
 {
     [SerializeField] GameObject player;
+    public float JumpBustSize = 0.1f;
     public Action<EWaterProperty> ActionWaterProperty;
     EWaterProperty currentPropery = EWaterProperty.None;
     private PlayerMove playerMove;
@@ -14,6 +15,7 @@ public class PlayerPump : MonoBehaviour
     public int PumpForce = 30;
     public float V = 0;
     private bool isPump = false;
+    private float squareV = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -57,7 +59,6 @@ public class PlayerPump : MonoBehaviour
         if (waterProperty == EWaterProperty.Slime)
         {
             Debug.Log("Slime");
-            playerMove.HaveWallSliding = true;
             playerMove.HaveWallJumping = true;
         }
         else if (waterProperty == EWaterProperty.Gasoline)
@@ -68,7 +69,6 @@ public class PlayerPump : MonoBehaviour
         {
             Debug.Log("None");
             playerMove.HaveDoubleJump = false;
-            playerMove.HaveWallSliding = false;
             playerMove.HaveWallJumping = false;
         }
     }
@@ -109,7 +109,10 @@ public class PlayerPump : MonoBehaviour
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
+        Debug.Log(squareV);
+
         StopCoroutine(Pupm());
+        waterIneract?.ResizeSquare();
         StopCoroutine(Squeeze());
         isPump = false;
         waterIneract = null;
@@ -129,14 +132,15 @@ public class PlayerPump : MonoBehaviour
                 {
                     V -= 1;
                     player.transform.localScale = new Vector3(player.transform.localScale.x - 0.01f, player.transform.localScale.y - 0.01f, player.transform.localScale.z);
-
-                    _interacteble.Pump(PumpForce);
+                    playerMove.JumpForce -= JumpBustSize;
+                    _interacteble.Pump(PumpForce, V);
                 }
                 else
                 {
                     Debug.Log("Squeeze Stop");
                     StopCoroutine(Squeeze());
                     isPump = false;
+                    SetProperty(EWaterProperty.None);
                 }
             }
         }
@@ -146,12 +150,14 @@ public class PlayerPump : MonoBehaviour
         yield return new WaitForSeconds(1);
         if(waterIneract != null)
         {
-            float i = waterIneract.Pump(PumpForce);
+            squareV += waterIneract.SubSquare();
+            float i = waterIneract.Pump(PumpForce, -1);
             if (i == 0f) { StopCoroutine(Pupm()); isPump = false; }
             V += i;
             if(player != null)
             {
                 player.transform.localScale = new Vector3(player.transform.localScale.x +0.01f, player.transform.localScale.y + 0.01f, player.transform.localScale.z);
+                playerMove.JumpForce += JumpBustSize;
             }
         }
     }
