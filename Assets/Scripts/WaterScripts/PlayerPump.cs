@@ -9,7 +9,7 @@ public class PlayerPump : MonoBehaviour
     public Action<EWaterProperty> ActionWaterProperty;
     EWaterProperty currentPropery = EWaterProperty.None;
     private PlayerMove playerMove;
-    IInteracteble _interacteble;
+    IWaterPump _interacteble;
     IWaterIneract waterIneract;
     public int PumpForce = 30;
     public float V = 0;
@@ -24,9 +24,25 @@ public class PlayerPump : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        InteractWaterPump();
+    }
+    private void InteractWaterPump()
+    {
         if (_interacteble != null && Input.GetKey(KeyCode.F))
         {
-            _interacteble.Interacte();
+            if (!isPump)
+            {
+                isPump = true;
+                StartCoroutine(Squeeze());
+            }
+        }
+        else if(Input.GetKeyUp(KeyCode.F))
+        {
+            Debug.Log("Out");
+            StopCoroutine(Squeeze());
+            isPump = false;
+            Debug.Log("Stop");
+
         }
     }
     private void SetProperty(EWaterProperty property)
@@ -66,10 +82,11 @@ public class PlayerPump : MonoBehaviour
     }
     private void WaterF(Collider2D collision)
     {
-        IInteracteble i = collision.GetComponent<IInteracteble>();
+        IWaterPump i = collision.GetComponent<IWaterPump>();
         if (i != null && _interacteble == null)
         {
             _interacteble = i;
+            _interacteble.SetPropertyWater(currentPropery);
         }
     }
     private void WaterP(Collider2D collision)
@@ -93,12 +110,37 @@ public class PlayerPump : MonoBehaviour
     private void OnTriggerExit2D(Collider2D collision)
     {
         StopCoroutine(Pupm());
+        StopCoroutine(Squeeze());
         isPump = false;
         waterIneract = null;
         _interacteble = null;
 
     }
+    IEnumerator Squeeze()
+    {
+        while (V > 0 && isPump)
+        {
 
+            yield return new WaitForSeconds(0.1f);
+            if (_interacteble != null)
+            {
+                Debug.Log("Squeeze");
+                if (player != null && V > 0)
+                {
+                    V -= 1;
+                    player.transform.localScale = new Vector3(player.transform.localScale.x - 0.01f, player.transform.localScale.y - 0.01f, player.transform.localScale.z);
+
+                    _interacteble.Pump(PumpForce);
+                }
+                else
+                {
+                    Debug.Log("Squeeze Stop");
+                    StopCoroutine(Squeeze());
+                    isPump = false;
+                }
+            }
+        }
+    }
     IEnumerator Pupm()
     {
         yield return new WaitForSeconds(1);

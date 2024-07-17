@@ -4,9 +4,14 @@ using System.Threading;
 using UnityEngine;
 using UnityEngine.U2D;
 
-public class SlimeWater : WaterProperty
+public class BaseWater : WaterProperty
 {
-    public override EWaterProperty Property { get => property; set => property = value; }
+    public override EWaterProperty Property { get => property; 
+        set {
+            property = value;
+            SetColorProperty();
+            } 
+        }
     [SerializeField] Color color = Color.blue;
     [SerializeField] SpriteShapeRenderer sprite;
 
@@ -42,6 +47,26 @@ public class SlimeWater : WaterProperty
         }      
     }
 
+    private void SetColorProperty()
+    {
+        if(Property == EWaterProperty.None)
+        {
+            color = Color.white;
+        } else if (Property == EWaterProperty.Water)
+        {
+            color = Color.blue;
+        }
+        else if (Property == EWaterProperty.Slime)
+        {
+            color = Color.green;
+
+        }
+        else if (Property == EWaterProperty.Gasoline)
+        {
+            color = Color.red;
+        }
+        sprite.color = color;
+    }
     // Update is called once per frame
     void Update()
     {
