@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,9 @@ using UnityEngine;
 public class PlayerPump : MonoBehaviour
 {
     [SerializeField] GameObject player;
+    public Action<EWaterProperty> ActionWaterProperty;
+    EWaterProperty currentPropery = EWaterProperty.None;
+    private PlayerMove playerMove;
     IInteracteble _interacteble;
     IWaterIneract waterIneract;
     public int PumpForce = 30;
@@ -13,7 +17,8 @@ public class PlayerPump : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        playerMove = player.GetComponent<PlayerMove>();
+        ActionWaterProperty += SetPropertyPlayer;
     }
 
     // Update is called once per frame
@@ -22,6 +27,33 @@ public class PlayerPump : MonoBehaviour
         if (_interacteble != null && Input.GetKey(KeyCode.F))
         {
             _interacteble.Interacte();
+        }
+    }
+    private void SetProperty(EWaterProperty property)
+    {
+        currentPropery = property;
+        ActionWaterProperty?.Invoke(EWaterProperty.None);
+        ActionWaterProperty?.Invoke(property);
+    }
+
+    private void SetPropertyPlayer(EWaterProperty waterProperty)
+    {
+        if (waterProperty == EWaterProperty.Slime)
+        {
+            Debug.Log("Slime");
+            playerMove.HaveWallSliding = true;
+            playerMove.HaveWallJumping = true;
+        }
+        else if (waterProperty == EWaterProperty.Gasoline)
+        {
+            Debug.Log("Gasoline");
+            playerMove.HaveDoubleJump = true;
+        } else
+        {
+            Debug.Log("None");
+            playerMove.HaveDoubleJump = false;
+            playerMove.HaveWallSliding = false;
+            playerMove.HaveWallJumping = false;
         }
     }
     private void OnTriggerStay2D(Collider2D collision)
@@ -47,6 +79,10 @@ public class PlayerPump : MonoBehaviour
         if (i != null && waterIneract == null)
         {
             waterIneract = i;
+            if(waterIneract.Property != currentPropery)
+            {
+                SetProperty(waterIneract.Property);
+            }
             if (isPump == false)
             {
                 isPump = true;

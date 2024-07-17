@@ -23,7 +23,6 @@ public class PlayerMove : MonoBehaviour
     private int _jumpCount = 1;
     [SerializeField] private float wallJumpDirectionForce = 5;
     private float wallJumpDirection = 0;
-    [SerializeField] public bool HaveWallJumping = false;
     #endregion
 
     #region Wall Slide
@@ -50,8 +49,9 @@ public class PlayerMove : MonoBehaviour
     #endregion
 
     #region Player Property 
-    public bool HaveDoubleJump { get; set; } = false;
-    public bool HaveWallSliding { get; set; } = false;
+    [SerializeField] public bool HaveDoubleJump = false;
+    [SerializeField] public bool HaveWallSliding = false;
+    [SerializeField] public bool HaveWallJumping = false;
     #endregion
     // Start is called before the first frame update
     void Start()
@@ -106,6 +106,7 @@ public class PlayerMove : MonoBehaviour
 
     private void WallSlide()
     {
+        if (!HaveWallSliding) return;
         if (!_isGrounded && (isLeftWall() || isRightWall()) && (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)))
         {
             isWallSilding = true;
@@ -145,7 +146,7 @@ public class PlayerMove : MonoBehaviour
             _rb.velocity = new Vector2(_rb.velocity.x, _jumpForce);
             JumpSoundPlay();
         }
-        else if (_rb.velocity.y != 0 && !_isGrounded && _jumpCount < maxJumpCount) // doubleJump
+        else if (_rb.velocity.y != 0 && !_isGrounded && _jumpCount < maxJumpCount && HaveDoubleJump) // doubleJump
         {
             _rb.velocity = new Vector2(_rb.velocity.x, _jumpForce);
             _jumpCount++;
