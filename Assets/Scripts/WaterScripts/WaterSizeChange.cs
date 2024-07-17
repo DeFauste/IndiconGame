@@ -6,15 +6,14 @@ public class WaterSizeChange : MonoBehaviour, IWaterPump
 {
     [SerializeField] private GameObject gameObject;
     [SerializeField] private WaterShapeController waterScripts;
-    private Transform transform;
     [SerializeField] private Canvas hint;
     private EWaterProperty _type = EWaterProperty.None;
     IWaterIneract waterIneract;
     private void Start()
     {
         hint.enabled = false;
-        transform = gameObject.transform;
         waterIneract = gameObject.GetComponent<IWaterIneract>();
+        _type = waterIneract.Property;
     }
 
     public void Pump(int forcePump)
@@ -31,13 +30,8 @@ public class WaterSizeChange : MonoBehaviour, IWaterPump
     private void OnTriggerExit2D(Collider2D collision)
     {
         hint.enabled = false;
-        _type = EWaterProperty.None;
     }
 
-    public void SetPropertyWater(EWaterProperty type)
-    {
-        _type = type;
-    }
 
     public float GetSquare()
     {
@@ -47,5 +41,17 @@ public class WaterSizeChange : MonoBehaviour, IWaterPump
     public float Fresh(int forcePump, float V)
     {
         return waterIneract.Fresh(forcePump, V);    
+    }
+
+    public bool SetPropertyWater(EWaterProperty type)
+    {
+        if(waterIneract.GetSquare() == 0 || type == _type || _type == EWaterProperty.None)
+        {
+            _type = type;
+            waterIneract.Property = _type;
+            return true;
+        }
+
+        return false;
     }
 }
