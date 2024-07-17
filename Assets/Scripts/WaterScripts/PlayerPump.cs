@@ -27,6 +27,10 @@ public class PlayerPump : MonoBehaviour
     {
         InteractWaterPump();
     }
+    private void FixedUpdate()
+    {
+        if(squareV <= 0) SetProperty(EWaterProperty.None);  
+    }
     private void InteractWaterPump()
     {
         if (squeezeIntercat != null && Input.GetKey(KeyCode.F))
@@ -120,7 +124,7 @@ public class PlayerPump : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
             if (squeezeIntercat != null)
             {
-                if (player != null && squareV > 0.01)
+                if (player != null && squareV > 0.001)
                 {
                     player.transform.localScale = new Vector3(player.transform.localScale.x - 0.01f, player.transform.localScale.y - 0.01f, player.transform.localScale.z);
                     playerMove.JumpForce -= JumpBustSize;
@@ -131,6 +135,11 @@ public class PlayerPump : MonoBehaviour
                     StopCoroutine(Squeeze());
                     isPump = false;
                     SetProperty(EWaterProperty.None);
+                }
+                if (player.transform.localScale.x < 1 || player.transform.localScale.y < 1 || squareV < 0f)
+                {
+                    player.transform.localScale = Vector3.one;
+                    squareV = 0f;
                 }
                 Debug.Log($"Текущий{squareV} и {squeezeIntercat.GetSquare()}");
             }

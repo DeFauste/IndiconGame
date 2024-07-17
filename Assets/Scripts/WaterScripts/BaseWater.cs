@@ -70,16 +70,17 @@ public class BaseWater : WaterProperty
 
     public override float GetSquare()
     {
-        return gameObject.transform.localScale.x * gameObject.transform.localScale.y;
+        return 24*8*gameObject.transform.localScale.x * gameObject.transform.localScale.y;
     }
 
     public override float Fresh(int forcePump, float square)
     {
         if (GetSquare() <= square)
         {
-            transform.position = new Vector3(transform.position.x, transform.position.y + 0.03f * forcePump * Time.fixedDeltaTime, transform.position.z);
-            transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y + 0.01f * forcePump * Time.fixedDeltaTime, transform.localScale.z);
+            float bust = (square/20f)/(24*transform.localScale.x);
+            transform.position = new Vector3(transform.position.x, transform.position.y + 0.03f * forcePump * bust * Time.fixedDeltaTime, transform.position.z);
+            transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y + 0.01f * forcePump * bust * Time.fixedDeltaTime, transform.localScale.z);
         }
-        return GetSquare()*1.25f;
+        return GetSquare();
     }
 }
