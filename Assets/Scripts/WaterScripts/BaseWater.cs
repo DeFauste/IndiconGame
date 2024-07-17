@@ -65,19 +65,28 @@ public class BaseWater : WaterProperty
 
     public override float Fresh(int forcePump, float square)
     {
-        float V = GetSquare();
-        Vector3 yP ;
-        Vector3 yS ;
-        if (square >= 0f)
-        {
-            float bust = 8/(24*transform.localScale.x);
-            Debug.Log($"BUST = {bust}");
-            gameObject.SetActive(true);
-            transform.position = new Vector3(transform.position.x, transform.position.y + 0.03f * forcePump* bust * Time.fixedDeltaTime, transform.position.z);
-            transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y + 0.01f * forcePump* bust * Time.fixedDeltaTime, transform.localScale.z);
+        float getV = 0f;
 
-        }
-        return GetSquare()-V;
+            if ((square-forcePump) > 0)
+            {
+                getV = forcePump;
+                startSquare += forcePump;
+                float s = startSquare / (24 * transform.localScale.x * 8);
+                transform.position = new Vector3(transform.position.x, transform.position.y + (s - transform.localScale.y) * 3f, transform.position.z);
+                transform.localScale = new Vector3(transform.localScale.x, s, transform.localScale.z);
+                gameObject.SetActive(true);
+            } else
+            {
+                getV = square;
+                startSquare += square;
+                float s = startSquare / (24 * transform.localScale.x * 8);
+                transform.position = new Vector3(transform.position.x, transform.position.y + (s - transform.localScale.y) * 3f, transform.position.z);
+                transform.localScale = new Vector3(transform.localScale.x, s, transform.localScale.z);
+                gameObject.SetActive(true);
+            }
+
+
+        return getV;
     }
     public override float Pump(int forcePump)
     {
@@ -85,7 +94,6 @@ public class BaseWater : WaterProperty
         if (startSquare >= 0)
         {
             if((startSquare - forcePump) > 0) {
-                Debug.Log($"{startSquare}");
                 getV = forcePump;
                 startSquare -= forcePump;
                 float s = startSquare / (24 * transform.localScale.x * 8);
