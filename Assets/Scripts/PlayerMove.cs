@@ -6,7 +6,7 @@ using UnityEngine.Rendering;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(CapsuleCollider2D))]
-public class __PlayerMove : MonoBehaviour
+public class PlayerMove : MonoBehaviour
 {
     [SerializeField, Range(0, 20)] private float _speed = 4f;
     private Rigidbody2D _rb;
@@ -21,9 +21,8 @@ public class __PlayerMove : MonoBehaviour
     private Vector2 vecGravity;
     [SerializeField] private int maxJumpCount = 2;
     private int _jumpCount = 1;
-    [SerializeField]private float wallJumpDirectionForce = 5;
+    [SerializeField] private float wallJumpDirectionForce = 5;
     private float wallJumpDirection = 0;
-    [SerializeField] public bool HaveWallJumping = false;
     #endregion
 
     #region Wall Slide
@@ -49,6 +48,11 @@ public class __PlayerMove : MonoBehaviour
     bool isLookingRight = false;
     #endregion
 
+    #region Player Property 
+    [SerializeField] public bool HaveDoubleJump = false;
+    [SerializeField] public bool HaveWallSliding = false;
+    [SerializeField] public bool HaveWallJumping = false;
+    #endregion
     // Start is called before the first frame update
     void Start()
     {
@@ -68,7 +72,7 @@ public class __PlayerMove : MonoBehaviour
     {
         input = new PlayerInput();
         input.Enable();
-        input.Gameplay.Jump.performed  += _ => Jump();
+        input.Gameplay.Jump.performed += _ => Jump();
     }
 
     private Vector2 GetDirection()
@@ -96,18 +100,20 @@ public class __PlayerMove : MonoBehaviour
     {
         FlipCheck();
         Move();
-        GravityFall();
+        //GravityFall();
         WallSlide();
     }
 
     private void WallSlide()
     {
-        if(!_isGrounded && (isLeftWall() || isRightWall()) && (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)))
+        if (!HaveWallSliding) return;
+        if (!_isGrounded && (isLeftWall() || isRightWall()) && (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)))
         {
             isWallSilding = true;
-            _rb.velocity = new Vector2(_rb.velocity.x, Mathf.Clamp(_rb.velocity.y, -wallSlidingSpeed , float.MaxValue));
+            _rb.velocity = new Vector2(_rb.velocity.x, Mathf.Clamp(_rb.velocity.y, -wallSlidingSpeed, float.MaxValue));
             wallJumpDirection = isLeftWall() ? wallJumpDirectionForce : -wallJumpDirectionForce;
-        }else
+        }
+        else
         {
             isWallSilding = false;
         }
@@ -122,7 +128,7 @@ public class __PlayerMove : MonoBehaviour
 
     private void Move()
     {
-        if(!isWallSilding)
+        if (!isWallSilding)
         {
             _rb.velocity = new Vector2(direction.x * _speed, _rb.velocity.y);
         }
@@ -130,23 +136,24 @@ public class __PlayerMove : MonoBehaviour
 
     private void Jump()
     {
-        if(HaveWallJumping && isWallSilding)
+        if (HaveWallJumping && isWallSilding)
         {
-            Debug.Log($"!{wallJumpDirection}!");
             _rb.velocity = new Vector2(wallJumpDirection, _jumpForce);
             JumpSoundPlay();
         }
-        else if (_isGrounded) {                                                    // Jump
-           _rb.velocity = new Vector2(_rb.velocity.x, _jumpForce);
-           JumpSoundPlay();
-        }else if(_rb.velocity.y != 0 && !_isGrounded && _jumpCount < maxJumpCount) // doubleJump
+        else if (_isGrounded)
+        {                                                    // Jump
+            _rb.velocity = new Vector2(_rb.velocity.x, _jumpForce);
+            JumpSoundPlay();
+        }
+        else if (_rb.velocity.y != 0 && !_isGrounded && _jumpCount < maxJumpCount && HaveDoubleJump) // doubleJump
         {
             _rb.velocity = new Vector2(_rb.velocity.x, _jumpForce);
             _jumpCount++;
             JumpSoundPlay();
-         }
+        }
 
-        if(_isGrounded)
+        if (_isGrounded)
         {
             _jumpCount = 1;
         }
@@ -182,7 +189,7 @@ public class __PlayerMove : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         var layerMask = other.gameObject.layer;
-        if(layerMask == LayerMask.NameToLayer ("Water"))
+        if (layerMask == LayerMask.NameToLayer("Water"))
         {
             splash.Play();
             audioSource.clip = dive;
@@ -193,7 +200,7 @@ public class __PlayerMove : MonoBehaviour
 
     private void JumpSoundPlay()
     {
-            audioSource.clip = jump;
-            audioSource.Play();
+        audioSource.clip = jump;
+        audioSource.Play();
     }
 }
