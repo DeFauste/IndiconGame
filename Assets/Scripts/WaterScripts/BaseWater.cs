@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.U2D;
+using static UnityEngine.ParticleSystem;
 
 public class BaseWater : WaterProperty
 {
@@ -12,7 +13,7 @@ public class BaseWater : WaterProperty
     [SerializeField] Color color = Color.blue;
     [SerializeField] SpriteShapeRenderer sprite;
     [SerializeField]private float startSquare;
-
+    private float yStart;
 
     public override void ResizeSquare()
     {
@@ -32,6 +33,7 @@ public class BaseWater : WaterProperty
             SetColorProperty();
             startSquare = GetSquare();
             Debug.Log($"ֽאקאכüםûי מבתול:{startSquare}");
+            yStart = transform.position.y;
         }      
     }
 
@@ -71,30 +73,36 @@ public class BaseWater : WaterProperty
             float bust = 8/(24*transform.localScale.x);
             Debug.Log($"BUST = {bust}");
             gameObject.SetActive(true);
-            yP = new Vector3(transform.position.x, transform.position.y + 0.03f * forcePump* bust * Time.fixedDeltaTime, transform.position.z);
-            yS = new Vector3(transform.localScale.x, transform.localScale.y + 0.01f * forcePump* bust * Time.fixedDeltaTime, transform.localScale.z);
-
-                transform.position = yP;
-                transform.localScale = yS;
-            
+            transform.position = new Vector3(transform.position.x, transform.position.y + 0.03f * forcePump* bust * Time.fixedDeltaTime, transform.position.z);
+            transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y + 0.01f * forcePump* bust * Time.fixedDeltaTime, transform.localScale.z);
 
         }
         return GetSquare()-V;
     }
     public override float Pump(int forcePump)
     {
-        float s = 0;
-        if (transform.localScale.y >= 0)
+        float getV = 0f;
+        if (startSquare >= 0)
         {
-            transform.position = new Vector3(transform.position.x, transform.position.y - 0.03f * forcePump * Time.fixedDeltaTime, transform.position.z);
-            transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y - 0.01f * forcePump * Time.fixedDeltaTime, transform.localScale.z);
-            s = SubSquare();
+            if((startSquare - forcePump) > 0) {
+                Debug.Log($"{startSquare}");
+                getV = forcePump;
+                startSquare -= forcePump;
+                float s = startSquare / (24 * transform.localScale.x * 8);
+                transform.position = new Vector3(transform.position.x, transform.position.y - (transform.localScale.y-s)*3f, transform.position.z);
+                transform.localScale = new Vector3(transform.localScale.x, s, transform.localScale.z);
+            } else
+            {
+                float s = startSquare / (24 * transform.localScale.x * 8);
+                getV = startSquare;
+                transform.position = new Vector3(transform.position.x, transform.position.y - (transform.localScale.y - s) * 3f, transform.position.z);
+                startSquare = 0;
+                transform.localScale = new Vector3(transform.localScale.x, 0, transform.localScale.z);
+                gameObject.SetActive(false);
+
+            }
         }
-        else
-        {
-            transform.localScale = new Vector3(transform.localScale.x, 0, transform.localScale.z);
-            gameObject.SetActive(false);
-        }
-        return s;
+
+        return getV;
     }
 }

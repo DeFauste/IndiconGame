@@ -12,9 +12,9 @@ public class PlayerPump : MonoBehaviour
     private PlayerMove playerMove;
     IWaterPump squeezeIntercat;
     IWaterIneract waterIneract;
-    public int PumpForce = 30;
+    public int PumpForce = 1;
     private bool isPump = false;
-    private float squareV = 0;
+    [SerializeField] private float squareV = 0;
     // Start is called before the first frame update
     void Start()
     {
