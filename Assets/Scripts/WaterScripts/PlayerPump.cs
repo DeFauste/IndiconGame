@@ -10,10 +10,9 @@ public class PlayerPump : MonoBehaviour
     public Action<EWaterProperty> ActionWaterProperty;
     EWaterProperty currentPropery = EWaterProperty.None;
     private PlayerMove playerMove;
-    IWaterPump _interacteble;
+    IWaterPump squeezeIntercat;
     IWaterIneract waterIneract;
     public int PumpForce = 30;
-    public float V = 0;
     private bool isPump = false;
     private float squareV = 0;
     // Start is called before the first frame update
@@ -30,7 +29,7 @@ public class PlayerPump : MonoBehaviour
     }
     private void InteractWaterPump()
     {
-        if (_interacteble != null && Input.GetKey(KeyCode.F))
+        if (squeezeIntercat != null && Input.GetKey(KeyCode.F))
         {
             if (!isPump)
             {
@@ -40,11 +39,8 @@ public class PlayerPump : MonoBehaviour
         }
         else if(Input.GetKeyUp(KeyCode.F))
         {
-            Debug.Log("Out");
             StopCoroutine(Squeeze());
             isPump = false;
-            Debug.Log("Stop");
-
         }
     }
     private void SetProperty(EWaterProperty property)
@@ -58,16 +54,13 @@ public class PlayerPump : MonoBehaviour
     {
         if (waterProperty == EWaterProperty.Slime)
         {
-            Debug.Log("Slime");
             playerMove.HaveWallJumping = true;
         }
         else if (waterProperty == EWaterProperty.Gasoline)
         {
-            Debug.Log("Gasoline");
             playerMove.HaveDoubleJump = true;
         } else
         {
-            Debug.Log("None");
             playerMove.HaveDoubleJump = false;
             playerMove.HaveWallJumping = false;
         }
@@ -83,10 +76,10 @@ public class PlayerPump : MonoBehaviour
     private void WaterF(Collider2D collision)
     {
         IWaterPump i = collision.GetComponent<IWaterPump>();
-        if (i != null && _interacteble == null)
+        if (i != null && squeezeIntercat == null)
         {
-            _interacteble = i;
-            _interacteble.SetPropertyWater(currentPropery);
+            squeezeIntercat = i;
+            squeezeIntercat.SetPropertyWater(currentPropery);
         }
     }
     private void WaterP(Collider2D collision)
@@ -109,40 +102,39 @@ public class PlayerPump : MonoBehaviour
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        Debug.Log(squareV);
+        Debug.Log($"Накопленный {squareV}");
 
         StopCoroutine(Pupm());
         waterIneract?.ResizeSquare();
         StopCoroutine(Squeeze());
         isPump = false;
         waterIneract = null;
-        _interacteble = null;
+        squeezeIntercat = null;
 
     }
     IEnumerator Squeeze()
     {
-        while (V > 0 && isPump)
+        while (squareV > 0 && isPump)
         {
 
             yield return new WaitForSeconds(0.1f);
-            if (_interacteble != null)
+            if (squeezeIntercat != null)
             {
-                Debug.Log("Squeeze");
-                if (player != null && V > 0)
+                if (player != null && squareV > 0.01)
                 {
-                    V -= 1;
                     player.transform.localScale = new Vector3(player.transform.localScale.x - 0.01f, player.transform.localScale.y - 0.01f, player.transform.localScale.z);
                     playerMove.JumpForce -= JumpBustSize;
-                    _interacteble.Pump(PumpForce, V);
+                    squareV -= squeezeIntercat.Fresh(PumpForce, squareV);
                 }
                 else
                 {
-                    Debug.Log("Squeeze Stop");
                     StopCoroutine(Squeeze());
                     isPump = false;
                     SetProperty(EWaterProperty.None);
                 }
+                Debug.Log($"Текущий{squareV} и {squeezeIntercat.GetSquare()}");
             }
+
         }
     }
     IEnumerator Pupm()
@@ -151,9 +143,9 @@ public class PlayerPump : MonoBehaviour
         if(waterIneract != null)
         {
             squareV += waterIneract.SubSquare();
-            float i = waterIneract.Pump(PumpForce, -1);
+            Debug.Log($"кор. площадь {squareV}");
+            float i = waterIneract.Pump(PumpForce);
             if (i == 0f) { StopCoroutine(Pupm()); isPump = false; }
-            V += i;
             if(player != null)
             {
                 player.transform.localScale = new Vector3(player.transform.localScale.x +0.01f, player.transform.localScale.y + 0.01f, player.transform.localScale.z);

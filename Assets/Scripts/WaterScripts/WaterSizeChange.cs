@@ -17,10 +17,10 @@ public class WaterSizeChange : MonoBehaviour, IWaterPump
         waterIneract = gameObject.GetComponent<IWaterIneract>();
     }
 
-    public void Pump(int forcePump, float V)
+    public void Pump(int forcePump)
     {
         gameObject.SetActive(true);
-        waterIneract.Pump(-forcePump, V);
+        waterIneract.Pump(forcePump);
         waterIneract.Property = _type;
     }
     private void OnTriggerStay2D(Collider2D collision)
@@ -37,5 +37,15 @@ public class WaterSizeChange : MonoBehaviour, IWaterPump
     public void SetPropertyWater(EWaterProperty type)
     {
         _type = type;
+    }
+
+    public float GetSquare()
+    {
+        return waterIneract.GetSquare();
+    }
+
+    public float Fresh(int forcePump, float V)
+    {
+        return waterIneract.Fresh(forcePump, V);    
     }
 }
