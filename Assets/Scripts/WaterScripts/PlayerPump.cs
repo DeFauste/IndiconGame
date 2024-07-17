@@ -6,13 +6,14 @@ using UnityEngine;
 public class PlayerPump : MonoBehaviour
 {
     [SerializeField] GameObject player;
-    public float JumpBustSize = 0.1f;
     public Action<EWaterProperty> ActionWaterProperty;
     EWaterProperty currentPropery = EWaterProperty.None;
     private PlayerMove playerMove;
     IWaterPump squeezeIntercat;
     IWaterIneract waterIneract;
     public int PumpForce = 1;
+    public float HeightForce = 1;
+    public float JumpForceV = 1;
     private bool isPump = false;
     [SerializeField] private float squareV = 0;
     // Start is called before the first frame update
@@ -124,8 +125,8 @@ public class PlayerPump : MonoBehaviour
             {
                 if (player != null && squareV > 0)
                 {
-                    player.transform.localScale = new Vector3(player.transform.localScale.x - 0.01f, player.transform.localScale.y - 0.01f, player.transform.localScale.z);
-                    playerMove.JumpForce -= JumpBustSize;
+                    player.transform.localScale = new Vector3(player.transform.localScale.x - 0.01f* HeightForce, player.transform.localScale.y - 0.01f* HeightForce, player.transform.localScale.z);
+                    playerMove.JumpForce -= JumpForceV;
                     squareV -= squeezeIntercat.Fresh(PumpForce, squareV);
                     Debug.Log($"рейсыхи {squareV}");
                 }
@@ -162,8 +163,8 @@ public class PlayerPump : MonoBehaviour
             }
             if(player != null)
             {
-                player.transform.localScale = new Vector3(player.transform.localScale.x +0.01f, player.transform.localScale.y + 0.01f, player.transform.localScale.z);
-                playerMove.JumpForce += JumpBustSize;
+                player.transform.localScale = new Vector3(player.transform.localScale.x +0.01f* HeightForce, player.transform.localScale.y + 0.01f* HeightForce, player.transform.localScale.z);
+                playerMove.JumpForce += JumpForceV;
             }
         }
     }
