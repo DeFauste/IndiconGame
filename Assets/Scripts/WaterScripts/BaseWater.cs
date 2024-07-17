@@ -13,7 +13,6 @@ public class BaseWater : WaterProperty
     [SerializeField] Color color = Color.blue;
     [SerializeField] SpriteShapeRenderer sprite;
     [SerializeField]private float startSquare;
-    private float yStart;
 
     public override void ResizeSquare()
     {
@@ -32,8 +31,6 @@ public class BaseWater : WaterProperty
         {
             SetColorProperty();
             startSquare = GetSquare();
-            Debug.Log($"ֽאקאכüםûי מבתול:{startSquare}");
-            yStart = transform.position.y;
         }      
     }
 
