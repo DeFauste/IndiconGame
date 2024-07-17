@@ -4,7 +4,7 @@ public class PlayerInteracte : MonoBehaviour
 {
     PlayerInput _inputActions;
 
-    IInteracteble _interacteble;
+    IWaterPump _interacteble;
     private void Start()
     {
         _inputActions = new PlayerInput();
@@ -13,7 +13,7 @@ public class PlayerInteracte : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        IInteracteble i =  collision.GetComponent<IInteracteble>();
+        IWaterPump i =  collision.GetComponent<IWaterPump>();
         if(i != null && _interacteble == null)
         {
             _interacteble = i;
@@ -24,7 +24,7 @@ public class PlayerInteracte : MonoBehaviour
     {
         if(_interacteble != null && Input.GetKey(KeyCode.F))
         {
-            _interacteble.Interacte();
+            
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
