@@ -106,8 +106,6 @@ public class PlayerPump : MonoBehaviour
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        Debug.Log($"Накопленный {squareV}");
-
         StopCoroutine(Pupm());
         waterIneract?.ResizeSquare();
         StopCoroutine(Squeeze());
@@ -124,11 +122,12 @@ public class PlayerPump : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
             if (squeezeIntercat != null)
             {
-                if (player != null && squareV > 0.001)
+                if (player != null && squareV > 0)
                 {
                     player.transform.localScale = new Vector3(player.transform.localScale.x - 0.01f, player.transform.localScale.y - 0.01f, player.transform.localScale.z);
                     playerMove.JumpForce -= JumpBustSize;
                     squareV -= squeezeIntercat.Fresh(PumpForce, squareV);
+                    Debug.Log($"ТЕКУЩИЙ {squareV}");
                 }
                 else
                 {
@@ -136,12 +135,14 @@ public class PlayerPump : MonoBehaviour
                     isPump = false;
                     SetProperty(EWaterProperty.None);
                 }
-                if (player.transform.localScale.x < 1 || player.transform.localScale.y < 1 || squareV < 0f)
+                if (player.transform.localScale.x < 1 || player.transform.localScale.y < 1)
                 {
                     player.transform.localScale = Vector3.one;
+                }
+                if(squareV < 0f)
+                {
                     squareV = 0f;
                 }
-                Debug.Log($"Текущий{squareV} и {squeezeIntercat.GetSquare()}");
             }
 
         }
@@ -151,10 +152,14 @@ public class PlayerPump : MonoBehaviour
         yield return new WaitForSeconds(1);
         if(waterIneract != null)
         {
-            squareV += waterIneract.SubSquare();
-            Debug.Log($"кор. площадь {squareV}");
-            float i = waterIneract.Pump(PumpForce);
-            if (i == 0f) { StopCoroutine(Pupm()); isPump = false; }
+
+            float i = waterIneract.Pump(PumpForce);     
+            squareV += i;
+
+            if (i == 0f) { 
+                StopCoroutine(Pupm()); 
+                isPump = false;
+            }
             if(player != null)
             {
                 player.transform.localScale = new Vector3(player.transform.localScale.x +0.01f, player.transform.localScale.y + 0.01f, player.transform.localScale.z);

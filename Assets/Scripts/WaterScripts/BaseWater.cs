@@ -11,20 +11,8 @@ public class BaseWater : WaterProperty
         }
     [SerializeField] Color color = Color.blue;
     [SerializeField] SpriteShapeRenderer sprite;
-    private float startSquare;
-    public override float Pump(int forcePump)
-    {
-        if (transform.localScale.y >= 0)
-        {
-            transform.position = new Vector3(transform.position.x, transform.position.y - 0.03f*forcePump * Time.fixedDeltaTime, transform.position.z);
-            transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y - 0.01f * forcePump  * Time.fixedDeltaTime, transform.localScale.z);
-        } else
-        {
-            transform.localScale = new Vector3(transform.localScale.x, 0 , transform.localScale.z);
-            gameObject.SetActive(false);
-        }
-        return SubSquare();
-    }
+    [SerializeField]private float startSquare;
+
 
     public override void ResizeSquare()
     {
@@ -32,7 +20,7 @@ public class BaseWater : WaterProperty
     }
     public override float SubSquare()
     {
-        return startSquare - (startSquare - GetSquare());
+        return (startSquare - GetSquare());
     }
 
 
@@ -42,7 +30,7 @@ public class BaseWater : WaterProperty
       if(sprite != null)
         {
             SetColorProperty();
-            startSquare = gameObject.transform.localScale.x * gameObject.transform.localScale.y;
+            startSquare = GetSquare();
             Debug.Log($"ֽאקאכüםûי מבתול:{startSquare}");
         }      
     }
@@ -75,12 +63,38 @@ public class BaseWater : WaterProperty
 
     public override float Fresh(int forcePump, float square)
     {
-        if (GetSquare() <= square)
+        float V = GetSquare();
+        Vector3 yP ;
+        Vector3 yS ;
+        if (square >= 0f)
         {
-            float bust = (square/20f)/(24*transform.localScale.x);
-            transform.position = new Vector3(transform.position.x, transform.position.y + 0.03f * forcePump * bust * Time.fixedDeltaTime, transform.position.z);
-            transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y + 0.01f * forcePump * bust * Time.fixedDeltaTime, transform.localScale.z);
+            float bust = 8/(24*transform.localScale.x);
+            Debug.Log($"BUST = {bust}");
+            gameObject.SetActive(true);
+            yP = new Vector3(transform.position.x, transform.position.y + 0.03f * forcePump* bust * Time.fixedDeltaTime, transform.position.z);
+            yS = new Vector3(transform.localScale.x, transform.localScale.y + 0.01f * forcePump* bust * Time.fixedDeltaTime, transform.localScale.z);
+
+                transform.position = yP;
+                transform.localScale = yS;
+            
+
         }
-        return GetSquare();
+        return GetSquare()-V;
+    }
+    public override float Pump(int forcePump)
+    {
+        float s = 0;
+        if (transform.localScale.y >= 0)
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y - 0.03f * forcePump * Time.fixedDeltaTime, transform.position.z);
+            transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y - 0.01f * forcePump * Time.fixedDeltaTime, transform.localScale.z);
+            s = SubSquare();
+        }
+        else
+        {
+            transform.localScale = new Vector3(transform.localScale.x, 0, transform.localScale.z);
+            gameObject.SetActive(false);
+        }
+        return s;
     }
 }
