@@ -5124,10 +5124,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a2c45ce88d5da94ca42170b24527ea7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waterColor: {r: 0.3215686, g: 0.40417507, b: 0.9607843, a: 1}
-  slimeColor: {r: 0.501736, g: 0.9622642, b: 0.48567107, a: 1}
-  gasolineColor: {r: 0.9528302, g: 0.26517445, b: 0.38627112, a: 1}
-  lemonadeColor: {r: 0.9528302, g: 0.9205208, b: 0.38203096, a: 1}
+  waterColor: {r: 0.6004361, g: 0.6482674, b: 0.9716981, a: 1}
+  slimeColor: {r: 0.58042705, g: 0.9622642, b: 0.56737274, a: 1}
+  gasolineColor: {r: 0.9716981, g: 0.56376827, b: 0.6336991, a: 1}
+  lemonadeColor: {r: 0.9716981, g: 0.9478389, b: 0.53626734, a: 1}
 --- !u!1 &4360836911369786606
 GameObject:
   m_ObjectHideFlags: 0
