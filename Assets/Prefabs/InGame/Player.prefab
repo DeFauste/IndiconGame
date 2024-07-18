@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 802304690019733179}
   - component: {fileID: 5302241908810099207}
   - component: {fileID: 8553998787883799720}
+  - component: {fileID: 1043542898547678796}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -5111,6 +5112,22 @@ MonoBehaviour:
   HeightForce: 5
   JumpForceV: 0.5
   squareV: 0
+--- !u!114 &1043542898547678796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4192088224993788538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a2c45ce88d5da94ca42170b24527ea7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waterColor: {r: 0.3215686, g: 0.40417507, b: 0.9607843, a: 1}
+  slimeColor: {r: 0.501736, g: 0.9622642, b: 0.48567107, a: 1}
+  gasolineColor: {r: 0.9528302, g: 0.26517445, b: 0.38627112, a: 1}
+  lemonadeColor: {r: 0.9528302, g: 0.9205208, b: 0.38203096, a: 1}
 --- !u!1 &4360836911369786606
 GameObject:
   m_ObjectHideFlags: 0

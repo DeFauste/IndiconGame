@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerPump : MonoBehaviour
 {
     [SerializeField] GameObject player;
-    public Action<EWaterProperty> ActionWaterProperty;
+    public static Action<EWaterProperty> ActionWaterProperty;
     [SerializeField] EWaterProperty currentPropery = EWaterProperty.None;
     private PlayerMove playerMove;
     IWaterPump squeezeIntercat;
@@ -30,7 +30,7 @@ public class PlayerPump : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        if(squareV <= 0) SetProperty(EWaterProperty.None);  
+        if(squareV <= 0) SetProperty(EWaterProperty.None);
     }
     private void InteractWaterPump()
     {
@@ -153,11 +153,11 @@ public class PlayerPump : MonoBehaviour
         if(waterIneract != null && (waterIneract.Property == currentPropery || currentPropery == EWaterProperty.None))
         {
 
-            float i = waterIneract.Pump(PumpForce);     
+            float i = waterIneract.Pump(PumpForce);
             squareV += i;
 
-            if (i == 0f) { 
-                StopCoroutine(Pupm()); 
+            if (i == 0f) {
+                StopCoroutine(Pupm());
                 isPump = false;
             }
             if(player != null)
