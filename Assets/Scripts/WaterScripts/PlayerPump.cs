@@ -84,7 +84,6 @@ public class PlayerPump : MonoBehaviour
         if (i != null && squeezeIntercat == null)
         {
             squeezeIntercat = i;
-            squeezeIntercat.SetPropertyWater(currentPropery);
         }
     }
     private void WaterP(Collider2D collision)
@@ -123,6 +122,7 @@ public class PlayerPump : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
             if (squeezeIntercat != null)
             {
+                squeezeIntercat.SetPropertyWater(currentPropery);
                 if (player != null && squareV > 0 && squeezeIntercat.SetPropertyWater(currentPropery))
                 {
                     player.transform.localScale = new Vector3(player.transform.localScale.x - 0.01f* HeightForce, player.transform.localScale.y - 0.01f* HeightForce, player.transform.localScale.z);

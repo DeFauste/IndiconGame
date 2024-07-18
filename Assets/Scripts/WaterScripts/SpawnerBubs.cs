@@ -24,7 +24,7 @@ public class SpawnerBubs : MonoBehaviour
     {
         if (interactLinquid != null && interactLinquid.Property == EWaterProperty.Soda)
         {
-            if (bubsList.Count == 0) GenerateBub();
+            if (bubsList.Count == 0 && interactLinquid.GetSquare() > 0f) GenerateBub();
             else
             {
                 Move();
