@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.U2D;
 using static UnityEngine.ParticleSystem;
 
-public class BaseLiquid : WaterProperty
+public class BaseWater : WaterProperty
 {
     public override EWaterProperty Property { get => property;
         set {
@@ -56,7 +56,7 @@ public class BaseLiquid : WaterProperty
         {
             color = gasolineColor;
         }
-        // sprite.color = color;
+        sprite.color = color;
     }
 
     public override float GetSquare()
