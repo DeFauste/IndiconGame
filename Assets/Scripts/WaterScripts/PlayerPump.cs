@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerPump : MonoBehaviour
 {
     [SerializeField] GameObject player;
-    public Action<EWaterProperty> ActionWaterProperty;
+    public static Action<EWaterProperty> ActionWaterProperty;
     [SerializeField] EWaterProperty currentPropery = EWaterProperty.None;
     private PlayerMove playerMove;
     IWaterPump squeezeIntercat;
