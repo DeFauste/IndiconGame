@@ -15,6 +15,21 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip test;
 
+    [SerializeField] private Button[] buttons;
+
+    [SerializeField] private int unlockedLevelsNumber = 1;
+
+    private void Awake()
+    {
+        for (int i = 0; i < buttons.Length; i++)
+        {
+            buttons[i].interactable = false;
+            if (i <= unlockedLevelsNumber)
+            {
+                buttons[i].interactable = true;
+            }
+        }
+    }
 
     private void Start()
     {
