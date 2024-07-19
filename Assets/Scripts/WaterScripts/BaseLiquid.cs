@@ -15,6 +15,7 @@ public class BaseWater : WaterProperty
     [SerializeField] Color waterColor;
     [SerializeField] Color slimeColor;
     [SerializeField] Color gasolineColor;
+    [SerializeField] Color sodaColor;
     [SerializeField] SpriteShapeRenderer sprite;
     [SerializeField] private float startSquare;
 
@@ -55,6 +56,9 @@ public class BaseWater : WaterProperty
         else if (Property == EWaterProperty.Gasoline)
         {
             color = gasolineColor;
+        } else if(Property == EWaterProperty.Soda)
+        {
+            color = sodaColor;
         }
         sprite.color = color;
     }
