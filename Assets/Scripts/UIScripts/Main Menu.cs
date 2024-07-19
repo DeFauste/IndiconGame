@@ -17,24 +17,30 @@ public class MainMenu : MonoBehaviour
 
     [SerializeField] private Button[] buttons;
 
-    [SerializeField] private int unlockedLevelsNumber = 1;
+    [SerializeField] private int unlockedLevelsNumber = 0;
 
     private void Awake()
     {
-        for (int i = 0; i < buttons.Length; i++)
-        {
-            buttons[i].interactable = false;
-            if (i <= unlockedLevelsNumber)
-            {
-                buttons[i].interactable = true;
-            }
-        }
+        CheckLevelsState();
     }
 
     private void Start()
     {
         SetMusicVolume();
         SetSFXVolume();
+    }
+
+    public void OpenAllLevels()
+    {
+        PlayerPrefs.SetInt("UnlockedLevelsNumber", buttons.Length);
+        PlayerPrefs.Save();
+        CheckLevelsState();
+    }
+
+    public void CloseAllLevels()
+    {
+        PlayerPrefs.DeleteKey("UnlockedLevelsNumber");
+        CheckLevelsState();
     }
 
     public void StartLevel(int levelNumber)
@@ -61,5 +67,18 @@ public class MainMenu : MonoBehaviour
     {
         audioSource.clip = test;
         audioSource.Play();
+    }
+
+    private void CheckLevelsState()
+    {
+        int unlockedLevels = PlayerPrefs.GetInt("UnlockedLevelsNumber", unlockedLevelsNumber);
+        for (int i = 0; i < buttons.Length; i++)
+        {
+            buttons[i].interactable = false;
+            if (i <= unlockedLevels)
+            {
+                buttons[i].interactable = true;
+            }
+        }
     }
 }
