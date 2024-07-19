@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7938529269798076385}
   - component: {fileID: 3401529087999881941}
   - component: {fileID: 8745895350709552029}
+  - component: {fileID: -5128842109188810259}
   m_Layer: 8
   m_Name: Bub
   m_TagString: Untagged
@@ -148,3 +149,18 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &-5128842109188810259
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 613475823671900761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51ab5b29ef551af498173945789f4115, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _speedFly: 1
+  _timeLifeTouch: 3
+  _heightFlyY: 3

@@ -11,8 +11,12 @@ public class SpawnerBubs : MonoBehaviour
     [SerializeField] private float Interwal = 1;
     [SerializeField] private int countBubs;
     [SerializeField] private float speedFlyBub = 1;
+    [SerializeField] private float SizeBub = 1;
+    [SerializeField] private float TimeLifeBubTouch = 3;
+    [SerializeField] private float HeightBubFly = 7;
     private List<GameObject> bubsList = new List<GameObject>();
     private IWaterIneract interactLinquid;
+    private bool EnableBub = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,31 +26,37 @@ public class SpawnerBubs : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (interactLinquid != null && interactLinquid.Property == EWaterProperty.Soda)
+        if (interactLinquid != null && interactLinquid.Property == EWaterProperty.Soda && interactLinquid.GetSquare() > 0f)
         {
-            if (bubsList.Count == 0 && interactLinquid.GetSquare() > 0f) GenerateBub();
-            else
-            {
-                Move();
-            }
+            if (bubsList.Count == 0) GenerateBub();
+            OffOnBubs(true);
+        } else
+        {
+            if(EnableBub)
+                OffOnBubs(false);  
         }
     }
 
     private void GenerateBub()
     {
+        EnableBub = true;
         for (int i = 1; i <= countBubs; i++)
         {
             GameObject b = Instantiate(bub);
             b.transform.position = new Vector3(leftPoint.position.x + i*Interwal, leftPoint.position.y, leftPoint.position.z);
+            b.transform.localScale = new Vector3(SizeBub, SizeBub);
+            b.GetComponent<BubFly>().Construct(speedFlyBub, TimeLifeBubTouch, HeightBubFly);
             bubsList.Add(b);
         }
     }
 
-    private void Move()
+    private void OffOnBubs(bool state)
     {
-        foreach (GameObject b in bubsList)
+        EnableBub = state;
+        for (int i = 0; i < countBubs; i++)
         {
-            b.transform.position = new Vector3(b.transform.position.x, b.transform.position.y + speedFlyBub * Time.fixedDeltaTime, b.transform.position.z);
+            bubsList[i].SetActive(state);
+            bubsList[i].transform.position = new Vector3(leftPoint.position.x + (i+1) * Interwal, leftPoint.position.y, leftPoint.position.z);   
         }
     }
 }
