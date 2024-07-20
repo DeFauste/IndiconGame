@@ -14,6 +14,7 @@ public class SpawnerBubs : MonoBehaviour
     [SerializeField] private float SizeBub = 1;
     [SerializeField] private float TimeLifeBubTouch = 3;
     [SerializeField] private float HeightBubFly = 7;
+    [SerializeField] private bool directLeftRight = true;
     private List<GameObject> bubsList = new List<GameObject>();
     private IWaterIneract interactLinquid;
     private bool isGenerate = false;
@@ -57,9 +58,15 @@ public class SpawnerBubs : MonoBehaviour
     {
         for (int i = 0; i < countBubs; i++)
         {
-            yield return new WaitForSeconds(Random.Range(3, 7));
+            yield return new WaitForSeconds(2);
             GameObject b = Instantiate(bub);
-            b.transform.position = new Vector3(rightPoint.position.x - i*Interwal, leftPoint.position.y, leftPoint.position.z);
+            if(directLeftRight)
+            {
+                b.transform.position = new Vector3(rightPoint.position.x - i * Interwal, leftPoint.position.y, leftPoint.position.z);
+            } else
+            {
+                b.transform.position = new Vector3(leftPoint.position.x + i * Interwal, leftPoint.position.y, leftPoint.position.z);
+            }
             b.transform.localScale = new Vector3(SizeBub, SizeBub);
             b.GetComponent<BubFly>().Construct(speedFlyBub, TimeLifeBubTouch, HeightBubFly);
             bubsList.Add(b);

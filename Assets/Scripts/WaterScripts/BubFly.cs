@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BubFly : MonoBehaviour
@@ -46,21 +47,32 @@ public class BubFly : MonoBehaviour
         }
     }
     //Работает от касание через тригер Groundcheck
-    private void OnTriggerEnter2D(Collider2D collision)
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    if (collision.gameObject.tag == "Foot" && !_isTouch)
+    //    {
+    //        _isTouch = true;
+    //        StartCoroutine(TimerDestroyBub());
+    //    }
+    //}
+
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Foot" && !_isTouch)
+        if (collision.gameObject.tag == "Player" && !_isTouch)
         {
+            Debug.Log("YEP");
             _isTouch = true;
             StartCoroutine(TimerDestroyBub());
         }
     }
-
     IEnumerator TimerDestroyBub()
     {
         yield return new WaitForSeconds(_timeLifeTouch);
         _collider.enabled = false;
         _sprite.enabled = false;
-        
+        _isTouch = false;
+
+
     }
     private void Move()
     {
@@ -76,7 +88,7 @@ public class BubFly : MonoBehaviour
         _isMove = false;
         _collider.enabled = false;
         _sprite.enabled = false;
-        yield return new WaitForSeconds(Random.Range(2,5));
+        yield return new WaitForSeconds(1);
         gameObject.transform.position = new Vector3(transform.position.x, _startPosY, transform.position.z);
         _isMove = true;
         _collider.enabled = true;
