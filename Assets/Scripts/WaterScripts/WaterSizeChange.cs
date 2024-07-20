@@ -40,7 +40,7 @@ public class WaterSizeChange : MonoBehaviour, IWaterPump
 
     public float Fresh(int forcePump, float V)
     {
-        return waterIneract.Fresh(forcePump, V);    
+        return waterIneract.Fresh(forcePump, V);
     }
 
     public bool SetPropertyWater(EWaterProperty type)
