@@ -57,7 +57,7 @@ public class SpawnerBubs : MonoBehaviour
     {
         for (int i = 0; i < countBubs; i++)
         {
-            yield return new WaitForSeconds(Random.Range(3, 7));
+            yield return new WaitForSeconds(2);
             GameObject b = Instantiate(bub);
             b.transform.position = new Vector3(rightPoint.position.x - i*Interwal, leftPoint.position.y, leftPoint.position.z);
             b.transform.localScale = new Vector3(SizeBub, SizeBub);
