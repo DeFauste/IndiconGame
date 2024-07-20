@@ -48,12 +48,10 @@ public class BubFly : MonoBehaviour
     //Работает от касание через тригер Groundcheck
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Тригер");
-        if (collision.gameObject.tag == "Player" && !_isTouch)
+        if (collision.gameObject.tag == "Foot" && !_isTouch)
         {
             _isTouch = true;
             StartCoroutine(TimerDestroyBub());
-            Debug.Log("Условие");
         }
     }
 
