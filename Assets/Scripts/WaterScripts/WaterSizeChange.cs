@@ -13,6 +13,7 @@ public class WaterSizeChange : MonoBehaviour, IWaterPump
     {
         hint.enabled = false;
         waterIneract = gameObject.GetComponent<IWaterIneract>();
+        _type = waterIneract.Property;
     }
 
     public void Pump(int forcePump)
