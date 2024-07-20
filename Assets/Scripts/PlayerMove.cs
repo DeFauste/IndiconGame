@@ -218,9 +218,10 @@ public class PlayerMove : MonoBehaviour
         audioSource.clip = jump;
         audioSource.Play();
     }
-    private void OnDisable()
+    private void OnDestroy()
     {
         input.Gameplay.Jump.performed -= _ => Jump();
+        input.Disable();
 
     }
 }
