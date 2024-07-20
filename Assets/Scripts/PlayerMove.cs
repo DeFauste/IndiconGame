@@ -218,4 +218,9 @@ public class PlayerMove : MonoBehaviour
         audioSource.clip = jump;
         audioSource.Play();
     }
+    private void OnDisable()
+    {
+        input.Gameplay.Jump.performed -= _ => Jump();
+
+    }
 }

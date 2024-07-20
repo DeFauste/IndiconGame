@@ -12,22 +12,10 @@ public class Wind : MonoBehaviour
     [SerializeField] protected Vector2 velocity = Vector2.zero;
     private GameObject gameObject;
 
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.tag.Equals(tag))
         {
-            Debug.Log("yes");
-
             gameObject = collision.gameObject;
 
             float influence = gameObject.transform.localScale.x;
