@@ -45,15 +45,15 @@ public class BubFly : MonoBehaviour
             Move();
         }
     }
-    //Работает от касание через тригер Groundcheck
+    //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ Groundcheck
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Тригер");
-        if (collision.gameObject.tag == "Player" && !_isTouch)
+        Debug.Log("пїЅпїЅпїЅпїЅпїЅпїЅ");
+        if (collision.gameObject.tag == "Foot" && !_isTouch)
         {
             _isTouch = true;
             StartCoroutine(TimerDestroyBub());
-            Debug.Log("Условие");
+            Debug.Log("пїЅпїЅпїЅпїЅпїЅпїЅпїЅ");
         }
     }
 
@@ -62,7 +62,7 @@ public class BubFly : MonoBehaviour
         yield return new WaitForSeconds(_timeLifeTouch);
         _collider.enabled = false;
         _sprite.enabled = false;
-        
+
     }
     private void Move()
     {

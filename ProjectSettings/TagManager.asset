@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Spring
   - FallingObject
+  - Foot
   layers:
   - Default
   - TransparentFX

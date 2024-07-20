@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(CapsuleCollider2D))]
@@ -48,13 +49,13 @@ public class PlayerMove : MonoBehaviour
     bool isLookingRight = false;
     #endregion
 
-    #region Player Property 
+    #region Player Property
     [SerializeField] public bool HaveDoubleJump = false;
     [SerializeField] public bool HaveWallJumping = false;
     public float JumpForce { get => _jumpForce; set
         {
             _jumpForce = value;
-        } 
+        }
     }
     #endregion
     // Start is called before the first frame update
@@ -94,6 +95,17 @@ public class PlayerMove : MonoBehaviour
 
         animator.SetBool("IsJumping", !_isGrounded);
         animator.SetFloat("XVelocity", Math.Abs(direction.x * _speed));
+
+        if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.R))
+        {
+            Scene scene = SceneManager.GetActiveScene();
+            SceneManager.LoadScene(scene.name);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            SceneManager.LoadScene(0);
+        }
     }
 
     private bool isGrounded() => Physics2D.OverlapCapsule(groundCheck.position, new Vector2(0.3f, 0.5f), CapsuleDirection2D.Horizontal, 0, groundLayer);
