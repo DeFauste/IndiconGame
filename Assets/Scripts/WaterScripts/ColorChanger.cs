@@ -9,7 +9,7 @@ public class ColorChanger : MonoBehaviour
     [SerializeField] Color waterColor;
     [SerializeField] Color slimeColor;
     [SerializeField] Color gasolineColor;
-    [SerializeField] Color lemonadeColor;
+    [SerializeField] Color sodaColor;
     SpriteRenderer sprite;
     private void OnEnable() => PlayerPump.ActionWaterProperty += OnPropertyChange;
     private void OnDisable() => PlayerPump.ActionWaterProperty -= OnPropertyChange;
@@ -38,10 +38,10 @@ public class ColorChanger : MonoBehaviour
         {
             sprite.color = color;
         }
-        // else if (property == EWaterProperty.Lemonade)
-        // {
-        //     sprite.color = lemonadeColor;
-        // }
+        else if (property == EWaterProperty.Soda)
+        {
+            sprite.color = sodaColor;
+        }
 
     }
 }

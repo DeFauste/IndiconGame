@@ -5128,7 +5128,7 @@ MonoBehaviour:
   waterColor: {r: 0.6004361, g: 0.6482674, b: 0.9716981, a: 1}
   slimeColor: {r: 0.58042705, g: 0.9622642, b: 0.56737274, a: 1}
   gasolineColor: {r: 0.9716981, g: 0.56376827, b: 0.6336991, a: 1}
-  lemonadeColor: {r: 0.9716981, g: 0.9478389, b: 0.53626734, a: 1}
+  sodaColor: {r: 0.9622642, g: 0.93274385, b: 0.4493592, a: 1}
 --- !u!1 &4200097046846032670
 GameObject:
   m_ObjectHideFlags: 0
