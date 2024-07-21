@@ -99,7 +99,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 4.1205473, y: 0.34971428}
+  m_Offset: {x: 4.0287237, y: 0.34971428}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -110,7 +110,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 9.241095, y: 3.2199259}
+  m_Size: {x: 9.057447, y: 3.2199259}
   m_EdgeRadius: 0
 --- !u!114 &1799795526632153333
 MonoBehaviour:
@@ -124,7 +124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5490b8dc2c0ff5d4ab5169ccd1ee1ef6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tag: Player
+  tag: WindObject
   velocity: {x: 200, y: 0}
 --- !u!1 &4455312845584021622
 GameObject:
@@ -281,7 +281,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1702195096690116936, guid: 9d2c66607bdb1674da8d9dfaf136dac3, type: 3}
       propertyPath: m_SortingOrder
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5426276601163192468, guid: 9d2c66607bdb1674da8d9dfaf136dac3, type: 3}
       propertyPath: playOnAwake
@@ -346,6 +346,18 @@ PrefabInstance:
     - target: {fileID: 6427039778417530550, guid: 9d2c66607bdb1674da8d9dfaf136dac3, type: 3}
       propertyPath: m_ConstrainProportionsScale
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6811704506558365449, guid: 9d2c66607bdb1674da8d9dfaf136dac3, type: 3}
+      propertyPath: m_SortingOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7290819098139682431, guid: 9d2c66607bdb1674da8d9dfaf136dac3, type: 3}
+      propertyPath: m_SortingOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8358585195969944557, guid: 9d2c66607bdb1674da8d9dfaf136dac3, type: 3}
+      propertyPath: m_SortingOrder
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

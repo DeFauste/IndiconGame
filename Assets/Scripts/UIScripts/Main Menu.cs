@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Audio;
 using UnityEngine.UI;
+using UnityEngine.AI;
 
 
 public class MainMenu : MonoBehaviour
@@ -56,11 +57,19 @@ public class MainMenu : MonoBehaviour
     public void SetMusicVolume()
     {
         audioMixer.SetFloat("Music", Mathf.Log10(musicSlider.value)*20);
+        if(musicSlider.value == 0)
+        {
+            audioMixer.SetFloat("Music", -80f);
+        }
     }
 
     public void SetSFXVolume()
     {
         audioMixer.SetFloat("Sounds", Mathf.Log10(soundSlider.value)*20);
+        if(soundSlider.value == 0)
+        {
+            audioMixer.SetFloat("Sounds", -80f);
+        }
     }
 
     public void TestAudioClipPlay()

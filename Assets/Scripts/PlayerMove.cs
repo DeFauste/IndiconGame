@@ -96,13 +96,13 @@ public class PlayerMove : MonoBehaviour
         animator.SetBool("IsJumping", !_isGrounded);
         animator.SetFloat("XVelocity", Math.Abs(direction.x * _speed));
 
-        if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.N))
         {
             Scene scene = SceneManager.GetActiveScene();
             SceneManager.LoadScene(scene.name);
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.M))
         {
             SceneManager.LoadScene(0);
         }
