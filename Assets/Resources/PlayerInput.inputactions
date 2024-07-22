@@ -2,7 +2,7 @@
     "name": "PlayerInput",
     "maps": [
         {
-            "name": "Gameplay",
+            "name": "PCGameplay",
             "id": "ac868f04-3ef0-4e8f-bc28-df17243991a0",
             "actions": [
                 {
@@ -86,6 +86,54 @@
                     "processors": "",
                     "groups": "",
                     "action": "F",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "PCHotKey",
+            "id": "c34ea8b8-ab18-49e7-85ef-cd3115cfed0b",
+            "actions": [
+                {
+                    "name": "Restart",
+                    "type": "Button",
+                    "id": "0c39b2f1-72de-4f21-b47c-4a91b5d63c50",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Pause",
+                    "type": "Button",
+                    "id": "b3112e0e-1f13-4348-9da2-0657f831ff0d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "582a111b-5d00-4ecd-b1a5-468f1dffb6dd",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Restart",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d3d09304-810c-478c-851e-4b3848b239d3",
+                    "path": "<Keyboard>/p",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

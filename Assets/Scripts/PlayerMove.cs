@@ -77,12 +77,12 @@ public class PlayerMove : MonoBehaviour
     {
         input = new PlayerInput();
         input.Enable();
-        input.Gameplay.Jump.performed += _ => Jump();
+        input.PCGameplay.Jump.performed += _ => Jump();
     }
 
     private Vector2 GetDirection()
     {
-        return input.Gameplay.Moveble.ReadValue<Vector2>(); ;
+        return input.PCGameplay.Moveble.ReadValue<Vector2>(); ;
     }
     private void Update()
     {
@@ -220,7 +220,7 @@ public class PlayerMove : MonoBehaviour
     }
     private void OnDestroy()
     {
-        input.Gameplay.Jump.performed -= _ => Jump();
+        input.PCGameplay.Jump.performed -= _ => Jump();
         input.Disable();
 
     }
