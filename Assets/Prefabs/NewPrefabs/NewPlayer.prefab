@@ -5142,7 +5142,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 592ede4371032be409d537643cf127eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  layerMask:
+  LiquidLayerMask:
     serializedVersion: 2
     m_Bits: 16
   _playerCollider: {fileID: 3544163326485941608}
