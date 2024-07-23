@@ -104,7 +104,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""f9f4ff0d-9dc4-41d4-a466-50f6a2857587"",
                     ""path"": ""<Keyboard>/f"",
-                    ""interactions"": ""Press(pressPoint=0.2)"",
+                    ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""F"",

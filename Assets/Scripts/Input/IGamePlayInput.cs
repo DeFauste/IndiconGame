@@ -7,6 +7,6 @@ namespace Assets.Scripts.Input
     {
         public Vector2 HorizontalDirection();
         public event Action OnJump;
-        public event Action OnInteract;
+        public event Action<bool> OnInteract;
     }
 }

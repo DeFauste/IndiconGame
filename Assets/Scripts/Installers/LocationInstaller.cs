@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.Player;
+using UnityEngine;
 using Zenject;
 
 namespace Assets.Scripts.Installers
@@ -9,6 +10,8 @@ namespace Assets.Scripts.Installers
         public GameObject heroPref;
         public override void InstallBindings()
         {
+            IPlayerProperty playerProperty = 
+                Container.InstantiatePrefabForComponent<PlayerController>(heroPref,startPoint.position, Quaternion.identity, null);
         }
     }
 }

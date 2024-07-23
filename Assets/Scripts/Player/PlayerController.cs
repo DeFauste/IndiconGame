@@ -59,7 +59,6 @@ namespace Assets.Scripts.Player
         {
             InitProperty();
             _gamePlayInput.OnJump += Jump;
-            _gamePlayInput.OnInteract += Interact;
         }
 
         private void InitProperty()
@@ -126,11 +125,6 @@ namespace Assets.Scripts.Player
             {
                 JumpCount = 0;
             }
-        }
-
-        private void Interact()
-        {
-            Debug.Log("Interact");
         }
 
         private void OnDestroy()
