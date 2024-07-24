@@ -1,5 +1,4 @@
 ﻿using Assets.Scripts.Player;
-using System;
 using UnityEngine;
 
 namespace Assets.Scripts.Liquid
@@ -13,7 +12,6 @@ namespace Assets.Scripts.Liquid
 
         private EWaterProperty _typeSpring = EWaterProperty.None;
         public EWaterProperty Property { get => _typeSpring; set { SetPropertyWater(value); } }
-
 
         private void Start()
         {
