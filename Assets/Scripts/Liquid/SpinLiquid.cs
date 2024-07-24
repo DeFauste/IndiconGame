@@ -12,11 +12,7 @@ namespace Assets.Scripts.Liquid
         private ILiquid liquidInteract;
 
         private EWaterProperty _typeSpring = EWaterProperty.None;
-        public EWaterProperty Property { get => _typeSpring; set
-            {
-                // TO DO
-            }
-        }
+        public EWaterProperty Property { get => _typeSpring; set { SetPropertyWater(value); } }
 
 
         private void Start()
@@ -38,10 +34,10 @@ namespace Assets.Scripts.Liquid
             hint.enabled = false;
         }
 
-        public float Fresh(int forcePump, float square)
+        public float Squeeze(int forcePump, float square)
         {
-            //TO DO
-            return 0f;
+
+            return liquidInteract.Squeeze(forcePump, square);         
         }
 
         public float GetSquare()
@@ -54,6 +50,18 @@ namespace Assets.Scripts.Liquid
         {
             //TO DO
             return 0f;
+        }
+
+        public bool SetPropertyWater(EWaterProperty type)
+        {
+            if (liquidInteract.GetSquare() == 0 || type == _typeSpring || _typeSpring == EWaterProperty.None)
+            {
+                _typeSpring = type;
+                liquidInteract.Property = type;
+                return true;
+            }
+
+            return false;
         }
     }
 }

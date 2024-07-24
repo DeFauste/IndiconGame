@@ -20,9 +20,10 @@ namespace Assets.Scripts.Player
 
         #region Liquid
         [SerializeField] LayerMask LiquidLayerMask; // слои жидкости
+        [SerializeField] LayerMask SpinLayerMask; // слои выжимок
         private ILiquid liquidInteract = null;  // интерфейс взаимодействия с жидкостью
         [SerializeField] EWaterProperty currentPropery = EWaterProperty.None; // текущее свойство полученное из жидкости
-        public static Action<EWaterProperty> ActionWaterProperty; // оповещаем о изменении свойства
+        public static Action<EWaterProperty> ActionLiquidProperty; // оповещаем о изменении свойства
         private bool _isInteract = false; // происходит сейчас взаидодействие?
         [SerializeField] private float squareV = 0; // текущий объем жидкости
         [SerializeField] private int ForcePump = 1;
@@ -30,7 +31,7 @@ namespace Assets.Scripts.Player
         public float GetSquare { get => squareV; set { /*подумать, как возвращать размер от объема*/ } }
         public EWaterProperty GetProperty { get => currentPropery; set { /* вот тут не уверен, что нужно, но пока есть */} }
         #endregion
-
+        [SerializeField] private bool isNull = false;
         [Inject]
         public void Construct(IGamePlayInput gamePlayInput)
         {
@@ -41,7 +42,7 @@ namespace Assets.Scripts.Player
         {
             _gamePlayInput.OnInteract += SetInteract;
             _playerProperty = GetComponent<IPlayerProperty>();
-            ActionWaterProperty += SetPropertyPlayer;
+            ActionLiquidProperty += SetPropertyPlayer;
         }
 
         private void SetPropertyPlayer(EWaterProperty waterProperty)
@@ -62,18 +63,22 @@ namespace Assets.Scripts.Player
         }
         private void OnTriggerStay2D(Collider2D collision)
         {
-            LiquidPump(collision);
+            if(LiquidLayerMask.value == (1 << collision.gameObject.layer)) LiquidPump(collision);
+            if(SpinLayerMask.value == (1 << collision.gameObject.layer)) LiquidSqueeze(collision);
         }
         private void OnTriggerExit2D(Collider2D collision)
         {
             _isInteract = false;
         }
-
+        private void FixedUpdate()
+        {
+            isNull = liquidInteract == null;
+        }
 
         private void SetProperty(EWaterProperty property)
         {
             currentPropery = property;
-            ActionWaterProperty?.Invoke(property);
+            ActionLiquidProperty?.Invoke(property);
         }
 
         private void SetInteract(bool state)
@@ -89,15 +94,19 @@ namespace Assets.Scripts.Player
                 liquidInteract = i;
                 if (!_isInteract && (currentPropery == EWaterProperty.None || currentPropery == liquidInteract.Property))
                 {
-                    _isInteract = true;
                     SetProperty(liquidInteract.Property);
                     StartCoroutine(Pupm());
+                } else
+                {
+                    liquidInteract = null;
                 }
             }
         }
 
         IEnumerator Pupm()
-        { 
+        {
+            _isInteract = true;
+            Debug.Log($"Pump Start {liquidInteract == null}");
             while (_isInteract)
             {
                 if (liquidInteract != null && (liquidInteract.Property == currentPropery || currentPropery == EWaterProperty.None))
@@ -122,12 +131,58 @@ namespace Assets.Scripts.Player
                 yield return new WaitForSeconds(1f);
             }
             liquidInteract = null;
+            Debug.Log($"Pump End {liquidInteract == null}");
         }
 
-        private void LiquidSqueeze()
+        private void LiquidSqueeze(Collider2D collision)
         {
-            Debug.Log("Squeeze");
+            ILiquid i = collision.gameObject.GetComponent<ILiquid>();
+            if (i != null && liquidInteract == null)
+            {
+                liquidInteract = i;
+                if (!_isInteract && (liquidInteract.Property == EWaterProperty.None || currentPropery == liquidInteract.Property))
+                {
+                    StartCoroutine(Squeeze());
+                } else
+                {
+                    liquidInteract = null;
+                }
+            }
         }
-
+        IEnumerator Squeeze()
+        {
+            _isInteract = true;
+            Debug.Log($"Sqeezy Start {liquidInteract == null}");
+            while (squareV > 0 && _isInteract)
+            {
+                if (liquidInteract != null)
+                {
+                    liquidInteract.Property = currentPropery;
+                    if (player != null && squareV > 0 && liquidInteract.SetPropertyWater(currentPropery))
+                    {
+                        int xS = player.transform.localScale.x > 0 ? 1 : -1;
+                        float x = Math.Abs(player.transform.localScale.x) - 0.01f * HeightForce;
+                        player.transform.localScale = new Vector3(xS * x, player.transform.localScale.y - 0.01f * HeightForce, player.transform.localScale.z); _playerProperty.ChangeJumpForce -= JumpForceV;
+                        squareV -= liquidInteract.Squeeze(ForcePump, squareV);
+                    }
+                    else
+                    {
+                        _isInteract = false;
+                    }
+                    if (Math.Abs(player.transform.localScale.x) < 1 || Math.Abs(player.transform.localScale.y) < 1)
+                    {
+                        player.transform.localScale = Vector3.one;
+                    }
+                    if (squareV <= 0f)
+                    {
+                        squareV = 0f;
+                        SetProperty(EWaterProperty.None);
+                    }
+                }
+                yield return new WaitForSeconds(0.5f);
+            }
+            liquidInteract = null;
+            Debug.Log($"Sqeezy End {liquidInteract == null}");
+        }
     }
 }

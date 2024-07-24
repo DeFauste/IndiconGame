@@ -5148,6 +5148,9 @@ MonoBehaviour:
   LiquidLayerMask:
     serializedVersion: 2
     m_Bits: 16
+  SpinLayerMask:
+    serializedVersion: 2
+    m_Bits: 2048
   currentPropery: 0
   squareV: 0
   ForcePump: 1

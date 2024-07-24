@@ -8,15 +8,10 @@ namespace Assets.Scripts.Liquid
 {
     public interface ILiquid
     {
-        // void Pump(int forcePump);
-        // float Fresh(int forcePump, float V);
-        // bool SetPropertyWater(EWaterProperty type);
-        // float GetSquare();
         EWaterProperty Property { get; set; }
-        //float SubSquare();
+        bool SetPropertyWater(EWaterProperty property);
         float GetSquare();
-        //void ResizeSquare();
         float Pump(int forcePump);
-        float Fresh(int forcePump, float square);
+        float Squeeze(int forcePump, float square);
     }
 }

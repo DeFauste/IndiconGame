@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Unity.VisualScripting;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.U2D;
 
 namespace Assets.Scripts.Liquid
 {
     public class UniversumLiquid : MonoBehaviour, ILiquid
     {
-        [SerializeField] public EWaterProperty property;
+        [SerializeField] public EWaterProperty _property;
         Color color;
         [SerializeField] Color waterColor;
         [SerializeField] Color slimeColor;
@@ -20,9 +14,9 @@ namespace Assets.Scripts.Liquid
         [SerializeField] SpriteShapeRenderer sprite;
         [SerializeField] private float startSquare;
 
-        public EWaterProperty Property { get => property; set
+        public EWaterProperty Property { get => _property; set
             {
-                property = value;
+                _property = value;
                 SetColorProperty();
             }
         }
@@ -60,10 +54,31 @@ namespace Assets.Scripts.Liquid
             sprite.color = color;
         }
 
-        public float Fresh(int forcePump, float square)
+        public float Squeeze(int forcePump, float square)
         {
-            //TO DO 
-            return 0f;
+            float getV = 0f;
+
+            if ((square - forcePump) > 0)
+            {
+                getV = forcePump;
+                startSquare += forcePump;
+                float s = startSquare / (24 * transform.localScale.x * 8);
+                transform.position = new Vector3(transform.position.x, transform.position.y + (s - transform.localScale.y) * 3f, transform.position.z);
+                transform.localScale = new Vector3(transform.localScale.x, s, transform.localScale.z);
+                gameObject.SetActive(true);
+            }
+            else
+            {
+                getV = square;
+                startSquare += square;
+                float s = startSquare / (24 * transform.localScale.x * 8);
+                transform.position = new Vector3(transform.position.x, transform.position.y + (s - transform.localScale.y) * 3f, transform.position.z);
+                transform.localScale = new Vector3(transform.localScale.x, s, transform.localScale.z);
+                gameObject.SetActive(true);
+            }
+
+
+            return getV;
         }
 
         public float GetSquare()
@@ -97,6 +112,17 @@ namespace Assets.Scripts.Liquid
             }
 
             return getV;
+        }
+
+        public bool SetPropertyWater(EWaterProperty property)
+        {
+            if (GetSquare() == 0 || _property == property || _property == EWaterProperty.None)
+            {
+                _property = property;
+                return true;
+            }
+
+            return false;
         }
     }
 }
