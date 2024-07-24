@@ -13,9 +13,9 @@ namespace Assets.Scripts.Liquid
         // bool SetPropertyWater(EWaterProperty type);
         // float GetSquare();
         EWaterProperty Property { get; set; }
-        float SubSquare();
+        //float SubSquare();
         float GetSquare();
-        void ResizeSquare();
+        //void ResizeSquare();
         float Pump(int forcePump);
         float Fresh(int forcePump, float square);
     }

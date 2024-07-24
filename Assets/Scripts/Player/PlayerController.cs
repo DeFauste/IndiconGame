@@ -90,7 +90,9 @@ namespace Assets.Scripts.Player
         {
             if (_rb.velocity.x != 0 && !_isWallSilding)
             {
-                gameObject.transform.localScale = _rb.velocity.x > 0 ? new Vector3(-1, 1, 1) : new Vector3(1, 1, 1);
+                gameObject.transform.localScale = _rb.velocity.x > 0 ? 
+                    new Vector3(-Mathf.Abs(gameObject.transform.localScale.x), gameObject.transform.localScale.y, 1) : 
+                    new Vector3(Mathf.Abs(gameObject.transform.localScale.x), gameObject.transform.localScale.y, 1);
             }
         }
 
@@ -117,7 +119,7 @@ namespace Assets.Scripts.Player
             {
                 _rb.velocity = new Vector2(directionJump, JumpForce);
             }
-            if (HaveDoubleJump && JumpCount < JumpAddCount && !_isWall && !_isGrounded)
+            if (HaveDoubleJump && JumpCount < JumpAddCount && !_isGrounded)
             {
                 _rb.velocity = new Vector2(directionJump, JumpForce);
                 JumpCount++;

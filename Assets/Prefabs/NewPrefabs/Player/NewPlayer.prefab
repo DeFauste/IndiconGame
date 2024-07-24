@@ -5126,7 +5126,7 @@ MonoBehaviour:
   JumpForce: 20
   ObstacleLayers:
     serializedVersion: 2
-    m_Bits: 320
+    m_Bits: 336
   GroundCheck: {fileID: 4266906905200239351}
   JumpWallX: 30
   WallCheck: {fileID: 4044484691370087355}
@@ -5142,10 +5142,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 592ede4371032be409d537643cf127eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 6768466110990644274}
+  HeightForce: 5
+  JumpForceV: 0.5
   LiquidLayerMask:
     serializedVersion: 2
     m_Bits: 16
-  _playerCollider: {fileID: 3544163326485941608}
+  currentPropery: 0
+  squareV: 0
+  ForcePump: 1
 --- !u!1 &6790858260569736355
 GameObject:
   m_ObjectHideFlags: 0

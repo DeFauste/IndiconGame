@@ -12,8 +12,8 @@ public class WaterSizeChange : MonoBehaviour, IWaterPump
     private void Start()
     {
         hint.enabled = false;
-        waterIneract = gameObject.GetComponent<IWaterIneract>();
-        _type = waterIneract.Property;
+        //waterIneract = gameObject.GetComponent<IWaterIneract>();
+        //_type = waterIneract.Property;
     }
 
     public void Pump(int forcePump)
