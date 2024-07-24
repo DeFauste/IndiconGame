@@ -50,12 +50,13 @@ public class WaterSpring : MonoBehaviour
     }
 
     private void OnCollisionEnter2D(Collision2D other) {
-        if (other.gameObject.tag.Equals("Player")) {
-            FallingObject fallingObject = other.gameObject.GetComponent<FallingObject>();
-            Rigidbody2D rb = fallingObject.rigidbody2D;
+  
+        Rigidbody2D rb = other.gameObject.GetComponent<Rigidbody2D>();
+        if (rb != null)
+        {
             var speed = rb.velocity;
-            
-            velocity += speed.y/resistance;
+
+            velocity += speed.y / resistance;
         }
     }
 }
