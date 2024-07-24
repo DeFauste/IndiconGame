@@ -40,14 +40,12 @@ namespace Assets.Scripts.Liquid
 
         public float GetSquare()
         {
-            //TO DO
-            return 0f;
+            return liquidInteract.GetSquare();
         }
 
         public float Pump(int forcePump)
         {
-            //TO DO
-            return 0f;
+            return liquidInteract.Pump(forcePump);
         }
 
         public bool SetPropertyWater(EWaterProperty type)
