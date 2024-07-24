@@ -8,7 +8,7 @@ using System.Collections;
 
 namespace Assets.Scripts.Player
 {
-    public class PlayerPumpLiquid : MonoBehaviour
+    public class PlayerPumpLiquid : MonoBehaviour, IPumpProperty
     {
         private IGamePlayInput _gamePlayInput; // Получаем управление
         #region Player
@@ -26,6 +26,9 @@ namespace Assets.Scripts.Player
         private bool _isInteract = false; // происходит сейчас взаидодействие?
         [SerializeField] private float squareV = 0; // текущий объем жидкости
         [SerializeField] private int ForcePump = 1;
+
+        public float GetSquare { get => squareV; set { /*подумать, как возвращать размер от объема*/ } }
+        public EWaterProperty GetProperty { get => currentPropery; set { /* вот тут не уверен, что нужно, но пока есть */} }
         #endregion
 
         [Inject]
@@ -83,11 +86,9 @@ namespace Assets.Scripts.Player
             ILiquid i = collision.gameObject.GetComponent<ILiquid>();
             if (i != null && liquidInteract == null)
             {
-                Debug.Log("Вошли в воду");
                 liquidInteract = i;
                 if (!_isInteract && (currentPropery == EWaterProperty.None || currentPropery == liquidInteract.Property))
                 {
-                    Debug.Log("Вошли в условия запуска корутины");
                     _isInteract = true;
                     SetProperty(liquidInteract.Property);
                     StartCoroutine(Pupm());
@@ -120,7 +121,6 @@ namespace Assets.Scripts.Player
                 }
                 yield return new WaitForSeconds(1f);
             }
-            Debug.Log("Вышли из корутины");
             liquidInteract = null;
         }
 

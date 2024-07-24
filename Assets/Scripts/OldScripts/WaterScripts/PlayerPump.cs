@@ -1,8 +1,9 @@
+using Assets.Scripts.Player;
 using System;
 using System.Collections;
 using UnityEngine;
 
-public class PlayerPump : MonoBehaviour
+public class PlayerPump : MonoBehaviour, IPumpProperty
 {
     [SerializeField] GameObject player;
     public static Action<EWaterProperty> ActionWaterProperty;
@@ -15,6 +16,10 @@ public class PlayerPump : MonoBehaviour
     public float JumpForceV = 1;
     private bool isPump = false;
     [SerializeField] private float squareV = 0;
+
+    public float GetSquare { get => squareV; set { /*подумать, как возвращать размер от объема*/ } }
+    public EWaterProperty GetProperty { get => currentPropery; set { /* вот тут не уверен, что нужно, но пока есть */} }
+
     // Start is called before the first frame update
     void Start()
     {
