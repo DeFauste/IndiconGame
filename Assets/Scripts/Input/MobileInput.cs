@@ -29,7 +29,7 @@ namespace Assets.Scripts.Input
             }
             else if (SimpleInput.GetButtonUp(_squeezeButton))
             {
-                OnInteract?.Invoke(true);
+                OnInteract?.Invoke(false);
             }
         }
     }
