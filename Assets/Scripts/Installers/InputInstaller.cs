@@ -18,7 +18,7 @@ namespace Assets.Scripts.Installers
             }
             else if(SystemInfo.deviceType == DeviceType.Handheld)
             {
-                //TO DO: MOBILE INPUT
+                Container.Bind<IGamePlayInput>().To<MobileInput>();
             }
         }
         private void Activate()
