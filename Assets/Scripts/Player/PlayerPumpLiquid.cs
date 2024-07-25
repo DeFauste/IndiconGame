@@ -10,6 +10,7 @@ namespace Assets.Scripts.Player
     public class PlayerPumpLiquid : MonoBehaviour, IPumpProperty
     {
         private IGamePlayInput _gamePlayInput; // Получаем управление
+        private bool _isPressF = false;
         #region Player
         [SerializeField] GameObject player;
         [SerializeField] private float HeightForce = 1.0f;
@@ -39,7 +40,7 @@ namespace Assets.Scripts.Player
 
         private void Start()
         {
-            _gamePlayInput.OnInteract += SetInteract;
+            _gamePlayInput.OnInteract += PressF;
             _playerProperty = GetComponent<IPlayerProperty>();
             ActionLiquidProperty += SetPropertyPlayer;
         }
@@ -63,7 +64,7 @@ namespace Assets.Scripts.Player
         private void OnTriggerStay2D(Collider2D collision)
         {
             if(LiquidLayerMask.value == (1 << collision.gameObject.layer)) LiquidPump(collision);
-            if(SpinLayerMask.value == (1 << collision.gameObject.layer)) LiquidSqueeze(collision);
+            if(_isPressF && SpinLayerMask.value == (1 << collision.gameObject.layer)) LiquidSqueeze(collision);
         }
         private void OnTriggerExit2D(Collider2D collision)
         {
@@ -80,9 +81,9 @@ namespace Assets.Scripts.Player
             ActionLiquidProperty?.Invoke(property);
         }
 
-        private void SetInteract(bool state)
+        private void PressF(bool state)
         {
-            _isInteract = state;
+            _isPressF = state;
         }
 
         private void LiquidPump(Collider2D collision)
@@ -170,7 +171,8 @@ namespace Assets.Scripts.Player
                     }
                     if (Math.Abs(player.transform.localScale.x) < 1 || Math.Abs(player.transform.localScale.y) < 1)
                     {
-                        player.transform.localScale = Vector3.one;
+                        int xS = player.transform.localScale.x > 0 ? 1 : -1;
+                        player.transform.localScale = new Vector3(xS * 1,1,1);
                     }
                     if (squareV <= 0f)
                     {

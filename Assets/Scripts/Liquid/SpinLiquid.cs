@@ -19,10 +19,10 @@ namespace Assets.Scripts.Liquid
             _typeSpring = liquidInteract.Property;
             hint.enabled = false;
         }
-        private void OnTriggerEnter2D(Collider2D collision)
+        private void OnTriggerStay2D(Collider2D collision)
         {
             IPumpProperty i = collision.gameObject.GetComponent<IPumpProperty>();
-            if (i != null && i.GetSquare > 0 && (i.GetProperty == _typeSpring ||  _typeSpring == EWaterProperty.None))
+            if (!hint.enabled && i != null && i.GetSquare > 0 && (i.GetProperty == _typeSpring ||  _typeSpring == EWaterProperty.None))
             {
                 hint.enabled = true;
             }
