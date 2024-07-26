@@ -12,18 +12,18 @@ EditorBuildSettings:
     path: Assets/Scenes/BaseScene.unity
     guid: 234806b308f6a3549af4b74fe6784a65
   - enabled: 0
-    path: Assets/Scenes/OldeLevel/Level X Copy.unity
+    path: Assets/Scenes/OldLevel/Level X Copy.unity
     guid: 1d57ba0591822c74a81fe549a9ad5e8e
   - enabled: 0
-    path: Assets/Scenes/OldeLevel/Level 1.unity
+    path: Assets/Scenes/OldLevel/Level 1.unity
     guid: 812d0b51b9a1a3540b3c01fc6d8f7c7c
   - enabled: 0
-    path: Assets/Scenes/OldeLevel/Level 2.unity
+    path: Assets/Scenes/OldLevel/Level 2.unity
     guid: 9253a907faec9cd4e991309afb6cde29
   - enabled: 0
-    path: Assets/Scenes/OldeLevel/Level 3.unity
+    path: Assets/Scenes/OldLevel/Level 3.unity
     guid: dad25cd9699155847a7cc7fc7f7dc966
   - enabled: 0
-    path: Assets/Scenes/OldeLevel/Level X.unity
+    path: Assets/Scenes/OldLevel/Level X.unity
     guid: 1884d8212d4390a40bea5fd359e07de5
   m_configObjects: {}
