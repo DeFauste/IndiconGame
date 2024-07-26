@@ -7,6 +7,7 @@ public class WaterSpring : MonoBehaviour
 {
     public float velocity = 0;
     public float force = 0;
+    public float heightSpring = 0.3f;
     // current height
     public float height = 0f;
     // normal height
@@ -56,7 +57,7 @@ public class WaterSpring : MonoBehaviour
         {
             var speed = rb.velocity;
 
-            velocity += speed.y / resistance;
+            velocity += speed.y / resistance + heightSpring;
         }
     }
 }
