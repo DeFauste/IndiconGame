@@ -20,5 +20,10 @@ namespace Assets.Scripts.UI
         {
             Time.timeScale = 1.0f;
         }
+
+        public void ExitLevel()
+        {
+            //To Do
+        }
     }
 }
