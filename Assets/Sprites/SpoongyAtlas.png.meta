@@ -2105,7 +2105,7 @@ TextureImporter:
         width: 28
         height: 28
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -2126,7 +2126,7 @@ TextureImporter:
         width: 28
         height: 28
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -2147,7 +2147,7 @@ TextureImporter:
         width: 28
         height: 27
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -2168,7 +2168,7 @@ TextureImporter:
         width: 6
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -2176,6 +2176,27 @@ TextureImporter:
       bones: []
       spriteID: 9ef14fed46956cf46a35218c9bf6d8dd
       internalID: 847998886
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SliderLine
+      rect:
+        serializedVersion: 2
+        x: 414
+        y: 41
+        width: 176
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6d09a8cfc924a404580dceeb59fc4f84
+      internalID: -688646330
       vertices: []
       indices: 
       edges: []
@@ -2258,6 +2279,7 @@ TextureImporter:
       Shaded_8: -1319004080
       Shaded_9: 897066128
       Slider: 847998886
+      SliderLine: -688646330
       SpoongyAtlas_10: -234989918
       SpoongyAtlas_11: -467344236
       SpoongyAtlas_12: 692028628
