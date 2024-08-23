@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 3778489585295490893}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.52, y: -0.36, z: 0}
+  m_LocalPosition: {x: -0.141, y: -0.057, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -178,8 +178,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 81365a85dcff4af498791e44dd795137, type: 3}
-  m_Color: {r: 1, g: 0.7971698, b: 0.7971698, a: 1}
+  m_Sprite: {fileID: -255517704, guid: 568e4ad76e9494a499bc7fd28231bc5a, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
@@ -221,8 +221,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.0069417953, y: -0.59667397}
-  m_Size: {x: 1.2638836, y: 1.8066521}
+  m_Offset: {x: -0.010620415, y: 0.004727006}
+  m_Size: {x: 0.60385, y: 0.8926141}
   m_Direction: 0
 --- !u!199 &5563783315411379244
 ParticleSystemRenderer:
@@ -5099,7 +5099,7 @@ Animator:
   m_GameObject: {fileID: 6768466110990644274}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 64bcbd94e4c36584eaf9f3efbf9bf2d9, type: 2}
+  m_Controller: {fileID: 9100000, guid: bed5a0f70a005a8408518385e6a84af7, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -5197,7 +5197,7 @@ Transform:
   m_GameObject: {fileID: 6790858260569736355}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.1, y: -0.7, z: 0}
+  m_LocalPosition: {x: -0.031, y: -0.411, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5229,7 +5229,7 @@ Transform:
   m_GameObject: {fileID: 7010832170746380705}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.48, z: 0}
+  m_LocalPosition: {x: 0, y: -0.41, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5267,6 +5267,6 @@ CapsuleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.8, y: 0.3}
+  m_Offset: {x: 0.0068743876, y: 0.03781453}
+  m_Size: {x: 0.51123565, y: 0.22437239}
   m_Direction: 1
