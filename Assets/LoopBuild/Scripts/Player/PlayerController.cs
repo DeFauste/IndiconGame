@@ -9,6 +9,10 @@ namespace Assets.Scripts.Player
     {
         private Rigidbody2D _rb;
         private IGamePlayInput _gamePlayInput;
+        private Animator _animator;
+
+        private readonly int JumpHash = Animator.StringToHash("IsJumping");
+        private readonly int RunHash = Animator.StringToHash("XVelocity");
 
         #region MOVE
         [SerializeField] private float SpeedMove = 10f;
@@ -51,7 +55,6 @@ namespace Assets.Scripts.Player
         [Inject]
         public void Construct(IGamePlayInput gamePlayInput)
         {
-            Debug.Log("Inst New Player Input");
             _gamePlayInput = gamePlayInput;
         }
 
@@ -59,12 +62,17 @@ namespace Assets.Scripts.Player
         {
             InitProperty();
             _gamePlayInput.OnJump += Jump;
+            _animator = gameObject.GetComponent<Animator>();
         }
 
         private void InitProperty()
         {
             _rb = GetComponent<Rigidbody2D>();
 
+        }
+        private void Update()
+        {
+            AnimationState();
         }
         private void FixedUpdate()
         {
@@ -73,7 +81,11 @@ namespace Assets.Scripts.Player
             WallSlide();
             FlipObject();
         }
-
+        private void AnimationState()
+        {
+            _animator.SetBool(JumpHash, !_isGrounded);
+            _animator.SetBool(RunHash, _gamePlayInput.HorizontalDirection().x != 0 && _isGrounded);
+        }
         private void CheckObstacle() 
         {
             _isWall = WallCheck.IsMyTouchingLayers(ObstacleLayers);
@@ -82,7 +94,10 @@ namespace Assets.Scripts.Player
         
         private void Move()
         {
-            if(!_isWallSilding) _rb.velocity = new Vector2(SpeedMove * _gamePlayInput.HorizontalDirection().x, _rb.velocity.y);
+            if (!_isWallSilding)
+            {
+                _rb.velocity = new Vector2(SpeedMove * _gamePlayInput.HorizontalDirection().x, _rb.velocity.y);
+            }
             
         }
 
