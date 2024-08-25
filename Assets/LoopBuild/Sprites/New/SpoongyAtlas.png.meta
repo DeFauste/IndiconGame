@@ -131,7 +131,7 @@ TextureImporter:
         width: 182
         height: 18
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -152,7 +152,7 @@ TextureImporter:
         width: 65
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -160,6 +160,48 @@ TextureImporter:
       bones: []
       spriteID: cb182b72edeecaa4f9b3930548a534d8
       internalID: -803757003
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpoongyAtlas_2
+      rect:
+        serializedVersion: 2
+        x: 415
+        y: 65
+        width: 73
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 72e5f302f8d4730488747698d5444685
+      internalID: -1749050463
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpoongyAtlas_3
+      rect:
+        serializedVersion: 2
+        x: 456
+        y: 96
+        width: 6
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e80b8bad760c04e4293db089ee69e98a
+      internalID: 1067372461
       vertices: []
       indices: 
       edges: []
@@ -177,6 +219,8 @@ TextureImporter:
     nameFileIdTable:
       SpoongyAtlas_0: -116121739
       SpoongyAtlas_1: -803757003
+      SpoongyAtlas_2: -1749050463
+      SpoongyAtlas_3: 1067372461
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
