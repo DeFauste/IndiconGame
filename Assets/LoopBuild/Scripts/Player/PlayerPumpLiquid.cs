@@ -16,7 +16,10 @@ namespace Assets.Scripts.Player
         [SerializeField] private float HeightForce = 1.0f;
         [SerializeField] private float JumpForceV = 1.0f;
         private IPlayerProperty _playerProperty;
+        private SpriteRenderer _spriteRenderer;
+        private Rigidbody2D _rigidbody;
         #endregion
+
 
         #region Liquid
         [SerializeField] LayerMask LiquidLayerMask; // слои жидкости
@@ -43,6 +46,8 @@ namespace Assets.Scripts.Player
             _gamePlayInput.OnInteract += PressF;
             _playerProperty = GetComponent<IPlayerProperty>();
             ActionLiquidProperty += SetPropertyPlayer;
+            _spriteRenderer = GetComponent<SpriteRenderer>();
+            _rigidbody = GetComponent<Rigidbody2D>();
         }
 
         private void SetPropertyPlayer(EWaterProperty waterProperty)
@@ -64,7 +69,7 @@ namespace Assets.Scripts.Player
         private void OnTriggerStay2D(Collider2D collision)
         {
             if(LiquidLayerMask.value == (1 << collision.gameObject.layer)) LiquidPump(collision);
-            if(_isPressF && SpinLayerMask.value == (1 << collision.gameObject.layer)) LiquidSqueeze(collision);
+            else if(_isPressF && SpinLayerMask.value == (1 << collision.gameObject.layer)) LiquidSqueeze(collision);
         }
         private void OnTriggerExit2D(Collider2D collision)
         {
@@ -84,6 +89,21 @@ namespace Assets.Scripts.Player
         private void PressF(bool state)
         {
             _isPressF = state;
+            SpriteOffOnn();
+        }
+
+        private void SpriteOffOnn()
+        {
+            if (_isPressF && liquidInteract != null)
+            {
+                _spriteRenderer.enabled = false;
+                _gamePlayInput.IsMove(false);
+            }
+            else
+            {
+                _spriteRenderer.enabled = true;
+                _gamePlayInput.IsMove(true);
+            }
         }
 
         private void LiquidPump(Collider2D collision)
@@ -147,6 +167,7 @@ namespace Assets.Scripts.Player
                 {
                     liquidInteract = null;
                 }
+                SpriteOffOnn();
             }
         }
         IEnumerator Squeeze()

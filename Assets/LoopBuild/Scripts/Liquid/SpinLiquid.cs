@@ -8,6 +8,7 @@ namespace Assets.Scripts.Liquid
         [SerializeField] private GameObject gameObject;
         [SerializeField] private WaterShapeController waterScripts;
         [SerializeField] private Canvas hint;
+        private Animator animator;
         private ILiquid liquidInteract;
 
         private EWaterProperty _typeSpring = EWaterProperty.None;
@@ -15,6 +16,7 @@ namespace Assets.Scripts.Liquid
 
         private void Start()
         {
+            animator = GetComponent<Animator>();
             liquidInteract = gameObject.GetComponent<ILiquid>();
             _typeSpring = liquidInteract.Property;
             hint.enabled = false;
@@ -34,7 +36,7 @@ namespace Assets.Scripts.Liquid
 
         public float Squeeze(int forcePump, float square)
         {
-
+            if (animator != null) animator.SetTrigger("IsPump");
             return liquidInteract.Squeeze(forcePump, square);         
         }
 

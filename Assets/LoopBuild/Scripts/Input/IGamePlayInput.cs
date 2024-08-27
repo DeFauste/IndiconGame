@@ -8,5 +8,6 @@ namespace Assets.Scripts.Input
         public Vector2 HorizontalDirection();
         public event Action OnJump;
         public event Action<bool> OnInteract;
+        public void IsMove(bool state);
     }
 }

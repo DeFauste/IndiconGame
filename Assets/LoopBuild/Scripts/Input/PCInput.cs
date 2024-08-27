@@ -9,6 +9,7 @@ namespace Assets.Scripts.Input
         PlayerInput _inputActions;
         public event Action OnJump;
         public event Action<bool> OnInteract;
+        private bool isMove = true;
 
         [Inject]
         public PCInput(PlayerInput inputActions)
@@ -28,7 +29,18 @@ namespace Assets.Scripts.Input
             OnInteract?.Invoke(state); 
         }
 
-        public Vector2 HorizontalDirection() => _inputActions.PCGameplay.Moveble.ReadValue<Vector2>();
+        public Vector2 HorizontalDirection()
+        {
+            if (isMove)
+                return _inputActions.PCGameplay.Moveble.ReadValue<Vector2>();
+            else
+                return Vector2.zero;
+        }
+
+        public void IsMove(bool state)
+        {
+            isMove = state;
+        }
 
         ~PCInput()
         {
