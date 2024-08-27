@@ -10,8 +10,10 @@ namespace Assets.Scripts.Installers
         public GameObject heroPref;
         public override void InstallBindings()
         {
-            IPlayerProperty playerProperty = 
-                Container.InstantiatePrefabForComponent<PlayerController>(heroPref,startPoint.position, Quaternion.identity, null);
+            GameObject heroInst = Container.InstantiatePrefab(heroPref, startPoint.position, Quaternion.identity, null);
+            IPlayerProperty playerProperty = heroInst.GetComponent<PlayerController>();
+            Container.Bind<IPlayerProperty>().FromInstance(playerProperty).AsSingle();
+            Container.Bind<Transform>().FromInstance(heroInst.transform);
         }
     }
 }
