@@ -1,21 +1,20 @@
-﻿using Assets.LoopBuild.Scripts.Manager;
-using System;
+﻿using System;
 using System.IO;
 using System.Text;
 using UnityEngine;
 
-namespace Assets.LoopBuild.Scripts.Saver
+namespace Assets.LoopBuild.Scripts.Saver.JSON
 {
     public class SaverJson : ISavedata
     {
-        public T Load<T>(string path)
+        public T[] Load<T>(string path)
         {
            try
             {
                 using (StreamReader reader = new StreamReader(path))
                 {
                     string json = reader.ReadToEndAsync().Result;
-                    var t = JsonUtility.FromJson<T>(json);
+                    var t = JsonHelper.FromJson<T>(json);
                     return t;
                 }
             }
@@ -23,7 +22,7 @@ namespace Assets.LoopBuild.Scripts.Saver
             {
                 Debug.Log(ex);
             }
-            return default(T);
+            return default(T[]);
         }
 
         public async void Save<T>(T data, string path)
@@ -35,6 +34,20 @@ namespace Assets.LoopBuild.Scripts.Saver
                 File.WriteAllText(path, json,Encoding.Default);
 
             } catch (Exception ex) 
+            {
+                Debug.Log(ex);
+            }
+        }
+        public async void Save<T>(T[] data, string path)
+        {
+            try
+            {
+                var json = JsonHelper.ToJson(data);
+                Debug.Log("Array"+json);
+                File.WriteAllText(path, json, Encoding.Default);
+
+            }
+            catch (Exception ex)
             {
                 Debug.Log(ex);
             }

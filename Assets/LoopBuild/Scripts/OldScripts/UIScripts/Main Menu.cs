@@ -21,7 +21,7 @@ public class MainMenu : MonoBehaviour
 
     private void Awake()
     {
-        CheckLevelsState();
+        //CheckLevelsState();
     }
 
     private void Start()
