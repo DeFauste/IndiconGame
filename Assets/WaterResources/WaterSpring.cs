@@ -7,6 +7,7 @@ public class WaterSpring : MonoBehaviour
 {
     public float velocity = 0;
     public float force = 0;
+    public float heightSpring = 0.3f;
     // current height
     public float height = 0f;
     // normal height
@@ -50,12 +51,13 @@ public class WaterSpring : MonoBehaviour
     }
 
     private void OnCollisionEnter2D(Collision2D other) {
-        if (other.gameObject.tag.Equals("Player")) {
-            FallingObject fallingObject = other.gameObject.GetComponent<FallingObject>();
-            Rigidbody2D rb = fallingObject.rigidbody2D;
+  
+        Rigidbody2D rb = other.gameObject.GetComponent<Rigidbody2D>();
+        if (rb != null)
+        {
             var speed = rb.velocity;
 
-            velocity += speed.y/resistance;
+            velocity += speed.y / resistance + heightSpring;
         }
     }
 }
