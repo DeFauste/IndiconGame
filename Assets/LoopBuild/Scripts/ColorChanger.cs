@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.U2D;
 using UnityEngine;
+using Assets.Scripts.Liquid;
+using Assets.Scripts.Player;
 
 public class ColorChanger : MonoBehaviour
 {
@@ -11,8 +13,8 @@ public class ColorChanger : MonoBehaviour
     [SerializeField] Color gasolineColor;
     [SerializeField] Color sodaColor;
     SpriteRenderer sprite;
-    private void OnEnable() => PlayerPump.ActionWaterProperty += OnPropertyChange;
-    private void OnDisable() => PlayerPump.ActionWaterProperty -= OnPropertyChange;
+    private void OnEnable() => PlayerPumpLiquid.ActionLiquidProperty += OnPropertyChange;
+    private void OnDisable() => PlayerPumpLiquid.ActionLiquidProperty -= OnPropertyChange;
 
     void Start()
     {

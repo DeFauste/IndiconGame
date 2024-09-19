@@ -43,7 +43,6 @@ namespace Assets.LoopBuild.Scripts.Saver.JSON
             try
             {
                 var json = JsonHelper.ToJson(data);
-                Debug.Log("Array"+json);
                 File.WriteAllText(path, json, Encoding.Default);
 
             }

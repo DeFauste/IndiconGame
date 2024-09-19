@@ -1,4 +1,6 @@
-﻿namespace Assets.Scripts.Player
+﻿using Assets.Scripts.Liquid;
+
+namespace Assets.Scripts.Player
 {
     public interface IPumpProperty
     {
