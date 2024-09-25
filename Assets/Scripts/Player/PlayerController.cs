@@ -12,7 +12,7 @@ namespace Assets.Scripts.Player
         private Animator _animator;
 
         private readonly int JumpHash = Animator.StringToHash("IsJumping");
-        private readonly int RunHash = Animator.StringToHash("XVelocity");
+        private readonly int RunHash = Animator.StringToHash("HasXVelocity");
 
         #region MOVE
         [SerializeField] private float SpeedMove = 10f;
@@ -70,10 +70,12 @@ namespace Assets.Scripts.Player
             _rb = GetComponent<Rigidbody2D>();
 
         }
+
         private void Update()
         {
             AnimationState();
         }
+
         private void FixedUpdate()
         {
             Move();
@@ -81,39 +83,46 @@ namespace Assets.Scripts.Player
             WallSlide();
             FlipObject();
         }
+
+        private bool IsRunning()
+        {
+            return Mathf.Abs(_gamePlayInput.HorizontalDirection().x) > 0.01f;
+        }
+
         private void AnimationState()
         {
             _animator.SetBool(JumpHash, !_isGrounded);
-            _animator.SetBool(RunHash, _gamePlayInput.HorizontalDirection().x != 0 && _isGrounded);
+            _animator.SetBool(RunHash, IsRunning() && _isGrounded);
         }
-        private void CheckObstacle() 
+
+        private void CheckObstacle()
         {
             _isWall = WallCheck.IsMyTouchingLayers(ObstacleLayers);
             _isGrounded = GroundCheck.IsMyTouchingLayers(ObstacleLayers);
         }
-        
+
         private void Move()
         {
             if (!_isWallSilding)
             {
                 _rb.velocity = new Vector2(SpeedMove * _gamePlayInput.HorizontalDirection().x, _rb.velocity.y);
             }
-            
+
         }
 
         private void FlipObject()
         {
             if (_rb.velocity.x != 0 && !_isWallSilding)
             {
-                gameObject.transform.localScale = _rb.velocity.x > 0 ? 
-                    new Vector3(-Mathf.Abs(gameObject.transform.localScale.x), gameObject.transform.localScale.y, 1) : 
+                gameObject.transform.localScale = _rb.velocity.x > 0 ?
+                    new Vector3(-Mathf.Abs(gameObject.transform.localScale.x), gameObject.transform.localScale.y, 1) :
                     new Vector3(Mathf.Abs(gameObject.transform.localScale.x), gameObject.transform.localScale.y, 1);
             }
         }
 
         private void WallSlide()
         {
-           if (_haveSliding && !_isGrounded && (_isWall && _gamePlayInput.HorizontalDirection().x != 0))
+           if (_haveSliding && !_isGrounded && _isWall && IsRunning())
            {
                _isWallSilding = true;
                _rb.velocity = new Vector2(_rb.velocity.x, Mathf.Clamp(_rb.velocity.y, -wallSlidingSpeed, float.MaxValue));

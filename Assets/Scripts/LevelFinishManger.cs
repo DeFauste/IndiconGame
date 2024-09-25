@@ -12,13 +12,14 @@ public class LevelFinishManger : MonoBehaviour
     public AudioClip collect;
 
     [SerializeField] private int levelNumber;
+    [SerializeField] private GameObject _particle;
 
     private void OnEnable() => Collectible.OnCollected += OnCollect;
     private void OnDisable() => Collectible.OnCollected -= OnCollect;
 
     private void Start()
     {
-        confetti = GetComponent<ParticleSystem>();
+        confetti = _particle.GetComponent<ParticleSystem>();
     }
 
     IEnumerator StartLevel()

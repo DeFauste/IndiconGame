@@ -86,7 +86,7 @@ GameObject:
   - component: {fileID: 8927615843022325812}
   - component: {fileID: 3244434613908481369}
   m_Layer: 0
-  m_Name: NewPlayer
+  m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -101,7 +101,7 @@ Transform:
   m_GameObject: {fileID: 6768466110990644274}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 14.93, y: 7.54, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -178,7 +178,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -255517704, guid: 568e4ad76e9494a499bc7fd28231bc5a, type: 3}
+  m_Sprite: {fileID: -835955534, guid: c24ed053bb3016b498bd21d0886b978d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
   m_FlipY: 0
@@ -5168,10 +5168,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58970d4dad8d1054dabd014d803e6695, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waterColor: {r: 0.6, g: 0.64705884, b: 0.9725491, a: 1}
-  slimeColor: {r: 0.5803922, g: 0.9607844, b: 0.5686275, a: 0.9764706}
-  gasolineColor: {r: 0.9725491, g: 0.5647059, b: 0.63529414, a: 1}
-  sodaColor: {r: 0.9607843, g: 0.93333334, b: 0.4509804, a: 1}
+  waterColor: {r: 0.7783019, g: 0.99157006, b: 1, a: 1}
+  slimeColor: {r: 0.42806605, g: 1, b: 0.41037738, a: 0.9764706}
+  gasolineColor: {r: 1, g: 0.4481132, b: 0.5436319, a: 1}
+  sodaColor: {r: 1, g: 0.8336042, b: 0.495283, a: 1}
 --- !u!1 &6790858260569736355
 GameObject:
   m_ObjectHideFlags: 0
@@ -5197,7 +5197,7 @@ Transform:
   m_GameObject: {fileID: 6790858260569736355}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.031, y: -0.411, z: 0}
+  m_LocalPosition: {x: 0.05, y: -0.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 16
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -2202,7 +2202,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SpoongyAtlas_0
+      name: Press0
       rect:
         serializedVersion: 2
         x: 356
@@ -2272,6 +2272,7 @@ TextureImporter:
       LiquidDrop7: -1113895211
       NormalLevelButton: -2099239095
       NormalMenuButton: 374764731
+      Press0: 1456721200
       Press1: -777654207
       Press2: -1650039595
       Press3: 1806806153
@@ -2301,7 +2302,6 @@ TextureImporter:
       Shaded_9: 897066128
       Slider: 847998886
       SliderLine: -688646330
-      SpoongyAtlas_0: 1456721200
       SpoongyAtlas_10: -234989918
       SpoongyAtlas_11: -467344236
       SpoongyAtlas_12: 692028628
