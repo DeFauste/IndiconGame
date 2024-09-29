@@ -135,17 +135,20 @@ namespace Assets.Scripts.Player
         private void Jump()
         {
             float directionJump = _rb.velocity.x;
+            Vector2 jumpVector = new Vector2(directionJump, 1);
             if (_isWall && !_isGrounded)
             {
                 directionJump = gameObject.transform.localScale.x * JumpWallX;
             }
             if (_isWallSilding &&_isWall || _isGrounded)
             {
-                _rb.velocity = new Vector2(directionJump, JumpForce);
+                //_rb.velocity = new Vector2(directionJump, JumpForce);
+                _rb.AddForce(jumpVector * JumpForce, ForceMode2D.Impulse);
             }
             if (HaveDoubleJump && JumpCount < JumpAddCount && !_isGrounded)
             {
-                _rb.velocity = new Vector2(directionJump, JumpForce);
+                //_rb.velocity = new Vector2(directionJump, JumpForce);
+                _rb.AddForce(jumpVector * (JumpForce/2), ForceMode2D.Impulse);
                 JumpCount++;
             }else if(_isGrounded)
             {
