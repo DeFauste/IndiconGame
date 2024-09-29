@@ -2,7 +2,7 @@
 using UnityEngine;
 using Zenject;
 
-namespace Assets.Scripts.Input
+namespace Assets.Scripts.InputSystem
 {
     public class PCInput : IGamePlayInput
     {

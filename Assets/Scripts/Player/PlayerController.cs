@@ -1,4 +1,5 @@
-using Assets.Scripts.Input;
+using Assets.Scripts.InputSystem;
+using System.Collections;
 using UnityEngine;
 using Zenject;
 
@@ -35,6 +36,14 @@ namespace Assets.Scripts.Player
         private bool _isWall;
         private bool _isWallSilding;
         private bool _haveSliding = false;
+        #endregion
+
+        #region DASH
+        private bool canDash = true;
+        private bool isDashing;
+        private float dashingPower = 24f;
+        private float dashingTime = 0.2f;
+        private float dashingCooldown = 1f;
         #endregion
 
         #region Property
@@ -74,14 +83,21 @@ namespace Assets.Scripts.Player
         private void Update()
         {
             AnimationState();
+            if(Input.GetKeyDown(KeyCode.K) && canDash)
+            {
+                StartCoroutine(Dash());
+            }
         }
 
         private void FixedUpdate()
         {
-            Move();
-            CheckObstacle();
-            WallSlide();
-            FlipObject();
+            if(!isDashing)
+            {
+                Move();
+                CheckObstacle();
+                WallSlide();
+                FlipObject();
+            }
         }
 
         private bool IsRunning()
@@ -155,6 +171,20 @@ namespace Assets.Scripts.Player
             {
                 JumpCount = 0;
             }
+        }
+
+        private IEnumerator Dash()
+        {
+            canDash = false;
+            isDashing = true;
+            float originalGravity = _rb.gravityScale;
+            _rb.gravityScale = 0f;
+            _rb.velocity = new Vector2(-1*transform.localScale.x * dashingPower, 0f);
+            yield return new WaitForSeconds(dashingTime);
+            _rb.gravityScale = originalGravity;
+            isDashing = false;
+            yield return new WaitForSeconds(dashingCooldown);
+            canDash = true;
         }
 
         private void OnDestroy()

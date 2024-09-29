@@ -1,4 +1,4 @@
-using Assets.Scripts.Input;
+using Assets.Scripts.InputSystem;
 using UnityEngine;
 
 namespace Assets.Scripts.NPC

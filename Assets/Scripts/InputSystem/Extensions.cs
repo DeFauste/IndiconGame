@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.Scripts.Input
+namespace Assets.Scripts.InputSystem
 {
     public static class Extensions
     {
