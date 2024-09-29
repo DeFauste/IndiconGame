@@ -125,6 +125,7 @@ namespace Assets.Scripts.Player
 
         IEnumerator Pupm()
         {
+            int bustPum = 0;
             _isInteract = true;
             Debug.Log($"Pump Start {liquidInteract == null}");
             while (_isInteract)
@@ -132,9 +133,10 @@ namespace Assets.Scripts.Player
                 if (liquidInteract != null && (liquidInteract.Property == currentPropery || currentPropery == EWaterProperty.None))
                 {
 
-                    float i = liquidInteract.Pump(ForcePump);
+                    float i = liquidInteract.Pump(ForcePump + bustPum);
                     squareV += i;
-
+                    bustPum++;
+                    Debug.Log($"PupmBust: {bustPum}");
                     if (i == 0f)
                     {
                         _isInteract = false;
@@ -143,9 +145,9 @@ namespace Assets.Scripts.Player
                     if (player != null)
                     {
                         int xS = player.transform.localScale.x > 0? 1: -1;
-                        float x = Math.Abs(player.transform.localScale.x) + 0.01f * HeightForce;
-                        player.transform.localScale = new Vector3(xS*x, player.transform.localScale.y + 0.01f * HeightForce, player.transform.localScale.z);
-                        _playerProperty.ChangeJumpForce += JumpForceV;
+                        float x = Math.Abs(player.transform.localScale.x) + 0.01f * HeightForce*bustPum;
+                        player.transform.localScale = new Vector3(xS*x, player.transform.localScale.y + 0.01f * HeightForce* bustPum, player.transform.localScale.z);
+                        //_playerProperty.ChangeJumpForce += JumpForceV;
                     }
                 }
                 yield return new WaitForSeconds(1f);
@@ -183,7 +185,8 @@ namespace Assets.Scripts.Player
                     {
                         int xS = player.transform.localScale.x > 0 ? 1 : -1;
                         float x = Math.Abs(player.transform.localScale.x) - 0.01f * HeightForce;
-                        player.transform.localScale = new Vector3(xS * x, player.transform.localScale.y - 0.01f * HeightForce, player.transform.localScale.z); _playerProperty.ChangeJumpForce -= JumpForceV;
+                        player.transform.localScale = new Vector3(xS * x, player.transform.localScale.y - 0.01f * HeightForce, player.transform.localScale.z); 
+                        //_playerProperty.ChangeJumpForce -= JumpForceV;
                         squareV -= liquidInteract.Squeeze(ForcePump, squareV);
                     }
                     else

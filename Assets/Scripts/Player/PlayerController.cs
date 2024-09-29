@@ -134,8 +134,9 @@ namespace Assets.Scripts.Player
         }
         private void Jump()
         {
+            float bustJumpOfScale = Mathf.Abs(gameObject.transform.localScale.x);
             float directionJump = _rb.velocity.x;
-            Vector2 jumpVector = new Vector2(directionJump, 1);
+            Vector2 jumpVector = new Vector2(directionJump, 1+ bustJumpOfScale);
             if (_isWall && !_isGrounded)
             {
                 directionJump = gameObject.transform.localScale.x * JumpWallX;
@@ -148,7 +149,7 @@ namespace Assets.Scripts.Player
             if (HaveDoubleJump && JumpCount < JumpAddCount && !_isGrounded)
             {
                 //_rb.velocity = new Vector2(directionJump, JumpForce);
-                _rb.AddForce(jumpVector * (JumpForce/2), ForceMode2D.Impulse);
+                _rb.AddForce(jumpVector * (JumpForce / 2), ForceMode2D.Impulse);
                 JumpCount++;
             }else if(_isGrounded)
             {

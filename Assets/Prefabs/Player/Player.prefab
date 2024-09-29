@@ -5124,7 +5124,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SpeedMove: 7
   wallSlidingSpeed: 1
-  JumpForce: 20
+  JumpForce: 10
   ObstacleLayers:
     serializedVersion: 2
     m_Bits: 336
