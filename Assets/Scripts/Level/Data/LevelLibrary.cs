@@ -19,7 +19,18 @@ namespace Assets.Scripts.Level.Data
             var date = StateLevels.Find(x => x.Id == sceneState.Id);
             date = sceneState;
         }
-        public void LoadLevel()
+        public void LevelIsFinish(LevelState levelState)
+        {
+            foreach (var level in StateLevels)
+            {
+                if(level.Id == levelState.Id)
+                {
+                    level.IsFinish = true;
+                    break;
+                }
+            }
+        }
+        public void LoadLevelsFromManagerScene()
         {
             var listLvl = GetAllSceneNames();
 
@@ -70,21 +81,35 @@ namespace Assets.Scripts.Level.Data
         {
             StateLevels.Clear();
         }
-        public void OpenNextLevel(string currentLevelId)
+
+        public void OpenLevelById(string id)
         {
             for (int i = 0; i < StateLevels.Count; i++)
             {
-                if (StateLevels[i].Id == currentLevelId && i < StateLevels.Count)
+                if (StateLevels[i].Id == id && i < StateLevels.Count)
                 {
                     StateLevels[i].IsOpen = true;
                     StateLevels[i].IsFinish = false;
                 }
             }
         }
-        public void OpenLevelById(string id)
+
+        public LevelState GetNextLevel(string currnetIdLevel)
         {
-            var level = GetLevelStateById(id);
-            level.IsOpen = true;
+            LevelState level = null;
+            Debug.Log(currnetIdLevel);
+            for (int i = 0; i < StateLevels.Count; i++)
+            {
+                if (StateLevels[i].Id == currnetIdLevel && (i + 1) < StateLevels.Count)
+                {
+                    level = StateLevels[i+1];
+                    level.IsOpen = true;
+                    Debug.Log(level.Id  );
+
+                    break;
+                }
+            }
+            return level;
         }
     }
 }

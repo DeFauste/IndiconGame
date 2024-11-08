@@ -1,8 +1,8 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine;
-using System;
+using Assets.Scripts.Services;
+using Zenject;
 
 public class LevelFinishManger : MonoBehaviour
 {
@@ -17,6 +17,12 @@ public class LevelFinishManger : MonoBehaviour
     private void OnEnable() => Collectible.OnCollected += OnCollect;
     private void OnDisable() => Collectible.OnCollected -= OnCollect;
 
+    private LevelService _levelService;
+    [Inject]
+    public void Construct(LevelService levelService)
+    {
+        _levelService = levelService;
+    }
     private void Start()
     {
         confetti = _particle.GetComponent<ParticleSystem>();
@@ -25,7 +31,9 @@ public class LevelFinishManger : MonoBehaviour
     IEnumerator StartLevel()
     {
         yield return new WaitForSecondsRealtime(3);
-        SceneManager.LoadSceneAsync(levelNumber);
+        _levelService.CurrentLevelIsFinish();
+        var level = _levelService.LoadNextLevel();
+        
     }
 
     void OnCollect()
@@ -33,7 +41,6 @@ public class LevelFinishManger : MonoBehaviour
         confetti.Play();
         audioSource.clip = collect;
         audioSource.Play();
-        UnlockNextLevel();
         StartCoroutine(StartLevel());
     }
 

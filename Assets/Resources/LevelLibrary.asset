@@ -13,12 +13,9 @@ MonoBehaviour:
   m_Name: LevelLibrary
   m_EditorClassIdentifier: 
   StateLevels:
-  - Id: MainMenu
-    IsFinish: 0
-    IsOpen: 1
   - Id: 1
     IsFinish: 0
-    IsOpen: 0
+    IsOpen: 1
   - Id: 2
     IsFinish: 0
     IsOpen: 0

@@ -11,7 +11,7 @@ namespace Assets.Scripts.Level
         private void Start()
         {
             LevelService = new LevelService(LevelLibrary);
-            LevelService.LoadLevelForScene();
+            LevelService.LoadLevelFromManagerScene();
         }
     }
 }

@@ -23,7 +23,8 @@ namespace Assets.Scripts.UI
 
         public void ExitLevel()
         {
-            //To Do
+            SceneManager.LoadScene(0);
+
         }
     }
 }
